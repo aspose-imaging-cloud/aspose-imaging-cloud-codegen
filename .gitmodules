@@ -1,0 +1,3 @@
+[submodule "SDKs/NET"]
+	path = SDKs/NET
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet
