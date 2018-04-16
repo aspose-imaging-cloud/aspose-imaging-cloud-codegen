@@ -1,0 +1,226 @@
+{{>licenseInfo}}
+package {{package}};
+
+import {{invokerPackage}}.*;
+import {{invokerPackage}}.internal.*;
+import {{invokerPackage}}.internal.requesthandlers.*;
+import {{modelPackage}}.requests.*;
+import com.aspose.imaging.cloud.sdk.stablemodel.*;
+import java.io.File;
+
+{{^fullJavaUtil}}
+import java.util.HashMap;
+{{/fullJavaUtil}}
+
+/**
+ * Aspose.Imaging for Cloud API
+ */
+public class {{classname}} 
+{
+	/**
+	 * The API invoker
+	 */
+    private ApiInvoker apiInvoker;
+
+    /**
+     * The configuration
+     */
+    private Configuration configuration;
+
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param appKey The app key.
+     * @param appSid The app SID.
+     */
+    public {{classname}}(String appKey, String appSid)
+    {
+		Configuration config = new Configuration();
+		config.AppKey = appKey;
+		config.AppSid = appSid;
+	    this.init{{classname}}(config);
+    }
+
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param appKey The app key.
+     * @param appSid The app SID.
+     * @param baseUrl The base URL.
+     */
+    public {{classname}}(String appKey, String appSid, String baseUrl)
+    {
+	    Configuration config = new Configuration();
+		config.AppKey = appKey;
+		config.AppSid = appSid;
+		config.setApiBaseUrl(baseUrl);
+		this.init{{classname}}(config);
+    }
+
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param appKey The app key.
+     * @param appSid The app SID.
+     * @param baseUrl The base URL.
+     * @param apiVersion API version.
+     */
+    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion)
+    {
+	    Configuration config = new Configuration();
+		config.AppKey = appKey;
+		config.AppSid = appSid;
+		config.setApiBaseUrl(baseUrl);
+		config.setApiVersion(apiVersion);
+		this.init{{classname}}(config);
+    }
+
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param appKey The app key.
+     * @param appSid The app SID.
+     * @param baseUrl The base URL.
+     * @param apiVersion API version.
+     * @param debug If debug mode is enabled.
+     */
+    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, Boolean debug)
+    {
+	    Configuration config = new Configuration();
+		config.AppKey = appKey;
+		config.AppSid = appSid;
+		config.setApiBaseUrl(baseUrl);
+		config.setApiVersion(apiVersion);
+		config.setDebugMode(debug);
+		this.init{{classname}}(config);
+    }
+    
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param appKey The app key.
+     * @param appSid The app SID.
+     * @param baseUrl The base URL.
+     * @param apiVersion API version.
+     * @param authType Authentication type.
+     * @param debug If debug mode is enabled.
+     */
+    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, AuthType authType, Boolean debug)
+    {
+	    Configuration config = new Configuration();
+		config.AppKey = appKey;
+		config.AppSid = appSid;
+		config.setApiBaseUrl(baseUrl);
+		config.setApiVersion(apiVersion);
+		config.setDebugMode(debug);
+		config.AuthType = authType;
+		this.init{{classname}}(config);
+    }
+
+    /**
+     * Initializes a new instance of the {{classname}} class.
+     * @param configuration Configuration settings.
+     */
+    private void init{{classname}}(Configuration configuration)
+    {
+        this.configuration = configuration;
+		IRequestHandler[] requestHandlers = new IRequestHandler[4];
+		requestHandlers[0] = new OAuthRequestHandler(this.configuration);
+        requestHandlers[1] = new DebugLogRequestHandler(this.configuration);
+        requestHandlers[2] = new ApiExceptionRequestHandler();
+        requestHandlers[3] = new AuthWithSignatureRequestHandler(this.configuration);
+        this.apiInvoker = new ApiInvoker(requestHandlers);
+    }
+	
+    {{#operations}}
+    {{#operation}}
+    /**
+     * {{summary}}
+     * {{notes}}
+     * @param request Holds parameters for this request invocation.
+     {{#returnType}}
+     * @return {{returnType}}
+     {{/returnType}}
+     * @throws Exception 
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+     {{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+     {{/externalDocs}}
+     */
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    public ApiResponse {{operationId}}({{nickname}}Request request) throws Exception 
+    {
+      {{#allParams}}{{#required}} // verify the required parameter 'request.{{paramName}}' is set
+      if (request.{{paramName}} == null) {
+        throw new ApiException(400, "Missing the required parameter 'request.{{paramName}}' when calling {{operationId}}");
+      }
+      {{/required}}{{/allParams}}// create path and map variables
+      String resourcePath = this.configuration.getApiRootUrl() + "{{path}}";
+	  {{#headerParams}}{{#-first}}HashMap<String,String> headerParams = new HashMap<String,String>();{{/-first}}{{/headerParams}}
+	  HashMap<String, Object> formParams = new HashMap<String, Object>();
+	  {{#pathParams}}resourcePath = UrlHelper.addPathParameter(resourcePath, "{{paramName}}", request.{{baseName}});
+      {{/pathParams}}{{#queryParams}}
+	  resourcePath = UrlHelper.addQueryParameterToUrl(resourcePath, "{{paramName}}", request.{{baseName}});{{/queryParams}}
+	  {{#headerParams}}if (request.{{paramName}} != null) 
+      {
+          headerParams.Add("{{paramName}}", this.apiInvoker.toPathValue(request.{{baseName}})); // header parameter
+      }{{/headerParams}}
+	  {{#hasBodyParam}}String postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}}); // http body (model) parameter{{/hasBodyParam}}
+	  {{#formParams}}if (request.{{baseName}} != null) 
+      {
+          {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
+      }{{/formParams}}
+	
+	  try 
+      {                               
+	     {{#vendorExtensions}}
+	      byte[] response = this.apiInvoker.invokeApi(
+              resourcePath, 
+              "{{httpMethod}}", 
+              {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
+              {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
+              formParams);
+	      {{#returnType}}
+				
+		  if (response == null)
+		  {
+			  return null;
+		  }
+		
+	      ApiResponse finalResponse; 
+		  if ({{returnType}}.class.getName().equals(File.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(response, null, null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(ImagingResponse.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, null, SerializationHelper.deserialize(new String(response), ImagingResponse.class));
+		  }
+		  else if ({{returnType}}.class.getName().equals(SaaSposeResponse.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SaaSposeResponse.class), null);
+		  }
+		  else
+		  {
+		  	  finalResponse = new ApiResponse(null, null, null);
+		  }
+				
+		  return finalResponse;
+		  {{/returnType}}
+		  {{/vendorExtensions}}
+      } 
+      catch (ApiException ex) 
+      {
+          if (ex.ErrorCode == 404) 
+          {
+              return null;
+          }
+                
+          throw ex;                
+      }
+    }
+  
+    {{/operation}}
+    {{/operations}}
+}
+{{>requestModel}}

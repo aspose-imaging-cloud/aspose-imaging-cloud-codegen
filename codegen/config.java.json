@@ -1,0 +1,17 @@
+{
+  "invokerPackage":"com.aspose.imaging.cloud.sdk.invoker",
+  "apiPackage":"com.aspose.imaging.cloud.sdk.api",
+  "modelPackage":"com.aspose.imaging.cloud.sdk.model",
+  "testPackage":"com.aspose.imaging.cloud.test.api",
+  "groupId":"com.aspose",
+  "artifactId":"aspose-imaging-cloud",
+  "artifactVersion":"18.3",
+  "artifactDescription":"Aspose.Imaging for Cloud SDK",
+  "artifactUrl":"https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java",
+  "developerOrganization":"Aspose Pty Ltd.",
+  "developerOrganizationUrl":"https://www.aspose.cloud/",
+  "licenseName":"MIT",
+  "licenseUrl":"https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java/blob/master/LICENSE",
+  "developerName":"Aspose",
+  "developerEmail":"sales@asposeptyltd.com"
+}

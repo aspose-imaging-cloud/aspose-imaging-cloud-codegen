@@ -1,3 +1,6 @@
 [submodule "SDKs/NET"]
 	path = SDKs/NET
 	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet
+[submodule "SDKs/Java"]
+	path = SDKs/Java
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java
