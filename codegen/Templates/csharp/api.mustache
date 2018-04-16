@@ -27,17 +27,154 @@ namespace {{packageName}}
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
-	using {{packageName}}.Client;
+    using {{packageName}}.Client;
     using {{packageName}}.Client.Internal;
+    using {{packageName}}.Client.Internal.RequestHandlers;
     using {{packageName}}.Model;
     using {{packageName}}.Model.Requests;
     
-    {{#operations}}
     /// <summary>
     /// Aspose.Imaging for Cloud API.
     /// </summary>
-    public partial class ImagingApi
-    {                            
+    public class {{classname}}
+    {                 
+        #region Fields
+
+        /// <summary>
+        /// The API invoker
+        /// </summary>
+        private readonly ApiInvoker apiInvoker;
+
+        /// <summary>
+        /// The configuration
+        /// </summary>
+        private readonly Configuration configuration;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <param name="appKey">
+        /// The app key.
+        /// </param>
+        /// <param name="appSid">
+        /// The app SID.
+        /// </param>
+        public {{classname}}(string appKey, string appSid)
+            : this(new Configuration { AppKey = appKey, AppSid = appSid })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <param name="appKey">
+        /// The app key.
+        /// </param>
+        /// <param name="appSid">
+        /// The app SID.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The base URL.
+        /// </param>
+        public {{classname}}(string appKey, string appSid, string baseUrl)
+            : this(new Configuration { AppKey = appKey, AppSid = appSid, ApiBaseUrl = baseUrl })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <param name="appKey">
+        /// The app key.
+        /// </param>
+        /// <param name="appSid">
+        /// The app SID.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The base URL.
+        /// </param>
+        /// <param name="apiVersion">
+        /// API version.
+        /// </param>
+        public {{classname}}(string appKey, string appSid, string baseUrl, string apiVersion)
+            : this(new Configuration { AppKey = appKey, AppSid = appSid, ApiBaseUrl = baseUrl, ApiVersion = apiVersion })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <param name="appKey">
+        /// The app key.
+        /// </param>
+        /// <param name="appSid">
+        /// The app SID.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The base URL. Use <see cref="Configuration.DefaultBaseUrl"/> to set the default base URL.
+        /// </param>
+        /// <param name="apiVersion">
+        /// API version.
+        /// </param>
+        /// <param name="debug">
+        /// If debug mode is enabled.
+        /// </param>
+        public {{classname}}(string appKey, string appSid, string baseUrl, string apiVersion, bool debug)
+            : this(new Configuration { AppKey = appKey, AppSid = appSid, ApiBaseUrl = baseUrl, ApiVersion = apiVersion, DebugMode = debug })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>
+        /// <param name="appKey">
+        /// The app key.
+        /// </param>
+        /// <param name="appSid">
+        /// The app SID.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The base URL. Use <see cref="Configuration.DefaultBaseUrl"/> to set the default base URL.
+        /// </param>
+        /// <param name="apiVersion">
+        /// API version.
+        /// </param>
+        /// <param name="authType">
+        /// Authentication type.
+        /// </param>
+        /// <param name="debug">
+        /// If debug mode is enabled.
+        /// </param>
+        public {{classname}}(string appKey, string appSid, string baseUrl, string apiVersion, AuthType authType, bool debug)
+            : this(new Configuration { AppKey = appKey, AppSid = appSid, ApiBaseUrl = baseUrl, ApiVersion = apiVersion, AuthType = authType, DebugMode = debug })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="{{classname}}"/> class.
+        /// </summary>    
+        /// <param name="configuration">Configuration settings</param>
+        private {{classname}}(Configuration configuration)
+        {
+            this.configuration = configuration;
+
+            var requestHandlers = new List<IRequestHandler>();
+            requestHandlers.Add(new OAuthRequestHandler(this.configuration));
+            requestHandlers.Add(new DebugLogRequestHandler(this.configuration));
+            requestHandlers.Add(new ApiExceptionRequestHandler());
+            requestHandlers.Add(new AuthWithSignatureRequestHandler(this.configuration));
+            this.apiInvoker = new ApiInvoker(requestHandlers);
+        }
+
+        #endregion
+	
+		#region Methods
+		
+	    {{#operations}}
         {{#operation}}
         /// <summary>
         /// {{summary}} {{notes}}
@@ -83,7 +220,6 @@ namespace {{packageName}}
                 {{#isFile}}formParams.Add("{{paramName}}", this.apiInvoker.ToFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
             }
             {{/formParams}}
-			
             try 
             {                               
 			{{#vendorExtensions}}
@@ -124,8 +260,10 @@ namespace {{packageName}}
                 throw;                
             }
         }
-        {{/operation}}        
+		
+        {{/operation}}   
+		{{/operations}}		
+		#endregion
     }
-    {{/operations}}
 }
 {{>requestModel}}
