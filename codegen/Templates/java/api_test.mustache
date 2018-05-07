@@ -1,0 +1,123 @@
+{{>licenseInfo}}
+
+package com.aspose.imaging.cloud.test.api;
+
+import {{invokerPackage}}.ApiResponse;
+import com.aspose.imaging.cloud.sdk.model.requests.*;
+import com.aspose.imaging.cloud.sdk.stablemodel.*;
+import com.aspose.imaging.cloud.test.base.ApiTester;
+
+import junitparams.*;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.Assert;
+import org.junit.Before;
+import java.lang.reflect.Method;
+
+/**
+ * API tests for {{classname}}
+ */
+@RunWith(JUnitParamsRunner.class)
+public class {{classname}}Test extends ApiTester {
+
+	@Before
+    public void setUp() throws Exception { 
+	    this.createApiInstances();
+    }
+    {{#operations}}{{#operation}}
+	private {{nickname}}Request {{nickname}}Request;
+	
+    /**
+     * Test operation: {{summary}}
+     * {{notes}}
+     * @param saveResultToStorage If result should be saved to storage
+     * @throws Exception
+     *          if the Api call fails
+     */
+    @Test
+	@Parameters({"true", "false"})
+    public void {{operationId}}Test(Boolean saveResultToStorage) throws Exception {
+        {{#allParams}}
+        {{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}byte[]{{/isFile}} {{paramName}} = null;
+        {{/allParams}}
+		String outName = name + "_specific." + "imageFormatExtension";
+		{{nickname}}Request = new {{nickname}}Request({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+		
+		Method propertiesTester = {{classname}}Test.class.getDeclaredMethod("{{operationId}}PropertiesTester", ImagingResponse.class, ImagingResponse.class);
+		propertiesTester.setAccessible(true);
+		Method requestInvoker;
+		
+		if ("{{httpMethod}}".equals("POST"))
+		{
+		    requestInvoker = {{classname}}Test.class.getDeclaredMethod("{{operationId}}PostRequestInvoker", byte[].class, String.class);
+			requestInvoker.setAccessible(true);
+		    this.TestPostRequest(
+                "{{operationId}}Test", 
+                saveResultToStorage,
+                "Parameters line",
+                name,
+                outName,
+                "Subfolder",
+                requestInvoker,
+                propertiesTester,
+                folder,
+                storage);
+		}
+		else
+		{
+		    requestInvoker = {{classname}}Test.class.getDeclaredMethod("{{operationId}}GetRequestInvoker", String.class, String.class);
+			requestInvoker.setAccessible(true);
+		    this.TestGetRequest(
+                "{{operationId}}Test", 
+                saveResultToStorage,
+                "Parameters line",
+                name,
+                outName,
+                "Subfolder",
+                requestInvoker,
+                propertiesTester,
+                folder,
+                storage);
+		}
+    }
+	
+	/**
+	 * Invokes GET request for {{operationId}} operation. Used indirectly by method reference.
+	 * @param name Image file name
+	 * @param outPath Out path
+	 * @return API response
+	 * @throws Exception 
+	 */
+	private ApiResponse {{operationId}}GetRequestInvoker(String name, String outPath) throws Exception
+	{
+		{{nickname}}Request.name = name;
+		{{nickname}}Request.outPath = outPath;
+        return ImagingApi.{{operationId}}({{nickname}}Request);
+	}
+	
+	/**
+	 * Invokes POST request for {{operationId}} operation. Used indirectly by method reference.
+	 * @param imageData Image data
+	 * @param outPath Out path
+	 * @return API response
+	 * @throws Exception 
+	 */
+	private ApiResponse {{operationId}}PostRequestInvoker(byte[] imageData, String outPath) throws Exception
+	{
+	    {{nickname}}Request.imageData = imageData;
+		{{nickname}}Request.outPath = outPath;
+        return ImagingApi.{{operationId}}({{nickname}}Request);
+	}
+	
+	/**
+	 * Tests properties for {{operationId}} operation. Used indirectly by method reference.
+	 * @param originalProperties Original image properties
+	 * @param resultProperties Result image properties
+	 */
+	private void {{operationId}}PropertiesTester(ImagingResponse originalProperties, ImagingResponse resultProperties)
+	{
+		// test properties here
+	}
+    {{/operation}}{{/operations}}
+}

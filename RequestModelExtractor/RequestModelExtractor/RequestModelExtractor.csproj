@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BD0E8626-3183-41AC-8F71-59B6564EFE8A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CSharpRequestModelExtractor</RootNamespace>
-    <AssemblyName>CSharpRequestModelExtractor</AssemblyName>
+    <RootNamespace>RequestModelExtractor</RootNamespace>
+    <AssemblyName>RequestModelExtractor</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,8 +36,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\RequestModelExtractor.cs" />
+    <Compile Include="Extractors\CSharpRequestModelExtractor.cs" />
+    <Compile Include="Extractors\JavaRequestModelExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
