@@ -247,13 +247,13 @@
     </profiles>
 
     <dependencies>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations-version}</version>
-        </dependency>
-
-        <!-- JSON processing: jackson -->
+	
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency> 
+	
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -362,7 +362,6 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <swagger-annotations-version>1.5.15</swagger-annotations-version>
         {{#supportJava6}}
             <commons_io_version>2.5</commons_io_version>
             <commons_lang3_version>3.6</commons_lang3_version>

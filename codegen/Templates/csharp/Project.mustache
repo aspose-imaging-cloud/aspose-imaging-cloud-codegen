@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-{{#appName}}
-{{{appName}}}
-
-{{/appName}}
-{{#appDescription}}
-{{{appDescription}}}
-
-{{/appDescription}}
-{{#version}}OpenAPI spec version: {{version}}{{/version}}
-{{#infoEmail}}Contact: {{{infoEmail}}}{{/infoEmail}}
--->
 <Project ToolsVersion="{{^netStandard}}12.0{{/netStandard}}{{#netStandard}}14.0{{/netStandard}}" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     {{#netStandard}}<MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>{{/netStandard}}
