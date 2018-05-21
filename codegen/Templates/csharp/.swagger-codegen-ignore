@@ -24,10 +24,13 @@ docs/*.md
 
 src/Aspose.Imaging.Cloud.Sdk/Model/SaaSposeResponse.cs
 src/Aspose.Imaging.Cloud.Sdk/Model/HttpStatusCode.cs
-src/Aspose.Imaging.Cloud.Sdk/StableModel/*
-src/Aspose.Imaging.Cloud.Sdk/StableModel/**
-src/Aspose.Imaging.Cloud.Sdk/Client/*
-src/Aspose.Imaging.Cloud.Sdk/Client/**
+src/Aspose.Imaging.Cloud.Sdk/StableModel/*.cs
+src/Aspose.Imaging.Cloud.Sdk/StableModel/**/*.cs
+src/Aspose.Imaging.Cloud.Sdk/Client/*.cs
+src/Aspose.Imaging.Cloud.Sdk/Client/**/*.cs
+src/Aspose.Imaging.Cloud.Sdk/Properties/*.cs
+src/Aspose.Imaging.Cloud.Sdk/Properties/**/*.cs
+src/Aspose.Imaging.Cloud.Sdk/*.nuspec
 
 # skip tests
 src/Aspose.Imaging.Cloud.Sdk.Test
@@ -41,3 +44,4 @@ Aspose.Imaging.Cloud.Sdk.sln
 build.bat
 build.sh
 README.md
+*.sh

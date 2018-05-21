@@ -38,20 +38,20 @@ namespace RequestModelExtractor.Base
         #region Properties
 
         /// <summary>
-        /// Gets the copyright offset.
-        /// </summary>
-        /// <value>
-        /// The copyright offset.
-        /// </value>
-        protected abstract int CopyrightOffset { get; }
-
-        /// <summary>
         /// Gets the file extension.
         /// </summary>
         /// <value>
         /// The file extension.
         /// </value>
         protected abstract string FileExtension { get; }
+
+        /// <summary>
+        /// Gets the copyright start signs.
+        /// </summary>
+        /// <value>
+        /// The copyright start signs.
+        /// </value>
+        protected abstract string CopyrightStart { get; }
 
         #endregion
 
@@ -101,14 +101,24 @@ namespace RequestModelExtractor.Base
                 foreach (FileInfo fileInfo in fileInfos)
                 {
                     text = PreProcessRequestModel(File.ReadAllText(fileInfo.FullName));
-                    MatchCollection matchCollection = Regex.Matches(text, $"<copyright company=\"Aspose\" file=\"(.*?).{FileExtension}\">");
-                    int startIndex;
-                    for (int index = matchCollection.Count - 1; index > 0; --index)
+                    MatchCollection copyrightStartCollection = Regex.Matches(text, this.CopyrightStart);
+                    MatchCollection copyrightMatchCollection = Regex.Matches(text, $"<copyright company=\"Aspose\" file=\"(.*?).{FileExtension}\">");
+                    int startTextIndex = 0, matchTextIndex;
+                    for (int index = copyrightMatchCollection.Count - 1; index > 0; index--)
                     {
-                        newFileName = $"{matchCollection[index].Groups[1]}.{FileExtension}";
-                        newFileName = Char.ToUpper(newFileName[0]) + newFileName.Substring(1, newFileName.Length - 1);
-                        startIndex = matchCollection[index].Index - CopyrightOffset;
-                        contents = text.Substring(startIndex);
+                        newFileName = $"{copyrightMatchCollection[index].Groups[1]}.{FileExtension}";
+                        newFileName = char.ToUpper(newFileName[0]) + newFileName.Substring(1, newFileName.Length - 1);
+                        matchTextIndex = copyrightMatchCollection[index].Index;
+                        for (int x = copyrightStartCollection.Count - 1; x > 0; x--)
+                        {
+                            if (copyrightStartCollection[x].Index < matchTextIndex)
+                            {
+                                startTextIndex = copyrightStartCollection[x].Index;
+                                break;
+                            }
+                        }
+
+                        contents = text.Substring(startTextIndex);
                         text = text.Substring(0, text.Length - contents.Length);
                         File.WriteAllText(modelFolderInfo.FullName + newFileName, contents);
                     }

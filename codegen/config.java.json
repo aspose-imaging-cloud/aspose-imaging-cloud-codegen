@@ -5,13 +5,13 @@
   "testPackage":"com.aspose.imaging.cloud.test.api",
   "groupId":"com.aspose",
   "artifactId":"aspose-imaging-cloud",
-  "artifactVersion":"18.3",
+  "artifactVersion":"18.6",
   "artifactDescription":"Aspose.Imaging for Cloud SDK",
   "artifactUrl":"https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java",
   "developerOrganization":"Aspose Pty Ltd.",
   "developerOrganizationUrl":"https://www.aspose.cloud/",
-  "licenseName":"MIT",
+  "licenseName":"MIT License",
   "licenseUrl":"https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java/blob/master/LICENSE",
-  "developerName":"Aspose",
-  "developerEmail":"sales@asposeptyltd.com"
+  "developerName":"Maksym Shnurenok",
+  "developerEmail":"maksym.shnurenok@aspose.com"
 }
