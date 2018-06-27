@@ -19,10 +19,13 @@ To use these SDKs, you will need App SID and App Key which can be looked up at [
 # Licensing
 All Aspose.Imaging for Cloud SDKs, helper scripts and templates are licensed under [MIT License](LICENSE).
 
+## Contact Us
+Your feedback is very important to us. Please feel free to contact via
++ [**Free Support Forum**](https://forum.aspose.cloud/c/imaging)
++ [**Paid Support Helpdesk**](https://helpdesk.aspose.imaging/)
+
 # Resources
 + [**Website**](https://www.aspose.cloud)
 + [**Product Home**](https://products.aspose.cloud/imaging/cloud)
 + [**Documentation**](https://docs.aspose.cloud/display/imagingcloud/Home)
-+ [**Free Support Forum**](https://forum.aspose.cloud/c/imaging)
-+ [**Paid Support Helpdesk**](https://helpdesk.aspose.imaging/)
 + [**Blog**](https://blog.aspose.cloud/category/aspose-products/aspose-imaging-product-family/)
