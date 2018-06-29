@@ -206,6 +206,22 @@ public class {{classname}}
 		  {
 			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SaaSposeResponse.class), null);
 		  }
+		  else if ({{returnType}}.class.getName().equals(ImageDuplicatesSet.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageDuplicatesSet.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(ImageFeatures.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageFeatures.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(SearchContextStatus.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchContextStatus.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(SearchResultsSet.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchResultsSet.class), null);
+		  }
 		  else
 		  {
 		  	  finalResponse = new ApiResponse(null, null, null);
