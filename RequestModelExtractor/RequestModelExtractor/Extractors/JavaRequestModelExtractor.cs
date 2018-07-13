@@ -25,17 +25,16 @@
 
 namespace RequestModelExtractor.Extractors
 {
-    using System;
     using System.Text.RegularExpressions;
 
     /// <inheritdoc />
     internal class JavaRequestModelExtractor : Base.RequestModelExtractor
     {
         /// <inheritdoc />
-        protected override int CopyrightOffset => 126;
+        protected override string FileExtension => "java";
 
         /// <inheritdoc />
-        protected override string FileExtension => "java";
+        protected override string CopyrightStart => @"/\*";
 
         /// <inheritdoc />
         protected override string PreProcessRequestModel(string initialApiText)

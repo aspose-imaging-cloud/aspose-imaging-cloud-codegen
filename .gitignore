@@ -33,6 +33,9 @@ Plugins/Aspose_Imaging_NET_for_PHP/composer.lock
 *.apk
 *.ap_
 
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+
 # Files for the ART/Dalvik VM
 *.dex
 

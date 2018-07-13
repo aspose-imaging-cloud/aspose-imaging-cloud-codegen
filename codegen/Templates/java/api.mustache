@@ -1,6 +1,7 @@
 {{>licenseInfo}}
 package {{package}};
 
+import {{modelPackage}}.*;
 import {{invokerPackage}}.*;
 import {{invokerPackage}}.internal.*;
 import {{invokerPackage}}.internal.requesthandlers.*;
@@ -17,6 +18,11 @@ import java.util.HashMap;
  */
 public class {{classname}} 
 {
+	/**
+	 * Current SDK version
+	 */
+	public static final String Version = "{{artifactVersion}}";
+
 	/**
 	 * The API invoker
 	 */
@@ -199,6 +205,22 @@ public class {{classname}}
 		  else if ({{returnType}}.class.getName().equals(SaaSposeResponse.class.getName()))
 		  {
 			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SaaSposeResponse.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(ImageDuplicatesSet.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageDuplicatesSet.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(ImageFeatures.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageFeatures.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(SearchContextStatus.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchContextStatus.class), null);
+		  }
+		  else if ({{returnType}}.class.getName().equals(SearchResultsSet.class.getName()))
+		  {
+			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchResultsSet.class), null);
 		  }
 		  else
 		  {

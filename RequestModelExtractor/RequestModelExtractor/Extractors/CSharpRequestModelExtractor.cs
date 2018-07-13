@@ -29,10 +29,10 @@ namespace RequestModelExtractor.Extractors
     internal class CSharpRequestModelExtractor : Base.RequestModelExtractor
     {
         /// <inheritdoc />
-        protected override int CopyrightOffset => 124;
+        protected override string FileExtension => "cs";
 
         /// <inheritdoc />
-        protected override string FileExtension => "cs";
+        protected override string CopyrightStart => "// -";
 
         /// <inheritdoc />
         protected override string PreProcessRequestModel(string initialApiText)
