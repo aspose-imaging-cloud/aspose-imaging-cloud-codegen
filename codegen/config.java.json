@@ -4,7 +4,7 @@
   "modelPackage":"com.aspose.imaging.cloud.sdk.model",
   "testPackage":"com.aspose.imaging.cloud.test.api",
   "groupId":"com.aspose",
-  "artifactId":"aspose-imaging-cloud",
+  "artifactId":"aspose-cloud-imaging",
   "artifactVersion":"18.6",
   "artifactDescription":"Aspose.Imaging for Cloud SDK",
   "artifactUrl":"https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java",
