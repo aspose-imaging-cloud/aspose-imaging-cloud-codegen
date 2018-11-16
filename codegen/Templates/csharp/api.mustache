@@ -40,15 +40,15 @@ namespace {{packageName}}
     {                 
         #region Fields
 
+	/// <summary>
+        /// The configuration
+        /// </summary>
+        public readonly Configuration Configuration;
+		
         /// <summary>
         /// The API invoker
         /// </summary>
         private readonly ApiInvoker apiInvoker;
-
-        /// <summary>
-        /// The configuration
-        /// </summary>
-        private readonly Configuration configuration;
 
         #endregion
 
@@ -160,11 +160,11 @@ namespace {{packageName}}
         /// <param name="configuration">Configuration settings</param>
         private {{classname}}(Configuration configuration)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
 
             var requestHandlers = new List<IRequestHandler>();
-            requestHandlers.Add(new OAuthRequestHandler(this.configuration));
-            requestHandlers.Add(new DebugLogRequestHandler(this.configuration));
+            requestHandlers.Add(new OAuthRequestHandler(this.Configuration));
+            requestHandlers.Add(new DebugLogRequestHandler(this.Configuration));
             requestHandlers.Add(new ApiExceptionRequestHandler());
             this.apiInvoker = new ApiInvoker(requestHandlers);
         }
@@ -178,9 +178,9 @@ namespace {{packageName}}
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <param name="request">Request. <see cref="{{nickname}}Request" /></param> 
+        /// <param name="request">Request. <see cref="{{vendorExtensions.x-operationId}}Request" /></param> 
         /// <returns><see cref="{{#returnType}}{{returnType}}{{/returnType}}"/></returns>            
-        public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}}({{nickname}}Request request)
+        public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-operationId}}({{vendorExtensions.x-operationId}}Request request)
         {
 {{#allParams}}{{#required}}            // verify the required parameter '{{paramName}}' is set
             if (request.{{baseName}} == null) 
@@ -189,7 +189,7 @@ namespace {{packageName}}
             }
 
 {{/required}}{{/allParams}}            // create path and map variables
-            var resourcePath = this.configuration.GetApiRootUrl() + "{{path}}";
+            var resourcePath = this.Configuration.GetApiRootUrl() + "{{path}}";
             resourcePath = Regex
                         .Replace(resourcePath, "\\*", string.Empty)
                         .Replace("&amp;", "&")

@@ -1,7 +1,7 @@
 # Aspose.Imaging for Cloud
 [Aspose.Imaging for Cloud](https://products.aspose.cloud/imaging/cloud) is a true REST API that enables you to perform a wide range of image processing operations including creation, manipulation and conversion in the cloud, with zero initial costs. Our Cloud SDKs are wrappers around REST API in various programming languages, allowing you to process images in language of your choice quickly and easily, gaining all benefits of strong types and IDE highlights. 
 
-The solution uses [Swagger-Codegen](https://github.com/swagger-api/swagger-codegen).
+The solution uses [Swagger-Codegen](https://github.com/swagger-api/swagger-codegen) build with no source code modifications.
 
 This repository contains templates and scripts for generating SDK code for all currently supported platforms. This can be useful for customizing the SDK or adding support for additional programming languages. If you are looking for ready to use, supported SDKs, take a look at available SDKs below.
 

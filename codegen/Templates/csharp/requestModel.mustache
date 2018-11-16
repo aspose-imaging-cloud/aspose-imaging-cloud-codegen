@@ -1,7 +1,7 @@
 {{#operations}}
 {{#operation}}
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Aspose" file="{{nickname}}Request.cs">
+// <copyright company="Aspose" file="{{vendorExtensions.x-operationId}}Request.cs">
 //   Copyright (c) 2018 Aspose Pty Ltd.
 // </copyright>
 // <summary>
@@ -30,25 +30,25 @@ namespace {{packageName}}.Model.Requests
   using {{packageName}}.Model; 
 
   /// <summary>
-  /// Request model for <see cref="Aspose.Imaging.Cloud.Sdk.ImagingApi.{{nickname}}" /> operation.
+  /// Request model for <see cref="Aspose.Imaging.Cloud.Sdk.ImagingApi.{{vendorExtensions.x-operationId}}" /> operation.
   /// </summary>  
-  public class {{nickname}}Request{{#vendorExtensions}}{{#x-csharp-implements}} : {{x-csharp-implements}} {{/x-csharp-implements}}  {{/vendorExtensions}}
+  public class {{vendorExtensions.x-operationId}}Request{{#vendorExtensions}}{{#x-csharp-implements}} : {{x-csharp-implements}} {{/x-csharp-implements}}  {{/vendorExtensions}}
   {
         {{#hasParams}}
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{nickname}}Request"/> class.
+        /// Initializes a new instance of the <see cref="{{vendorExtensions.x-operationId}}Request"/> class.
         /// </summary>        
-        public {{nickname}}Request()
+        public {{vendorExtensions.x-operationId}}Request()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="{{nickname}}Request"/> class.
+        /// Initializes a new instance of the <see cref="{{vendorExtensions.x-operationId}}Request"/> class.
         /// </summary>
         {{#allParams}}
         /// <param name="{{paramName}}">{{description}}</param>
         {{/allParams}}
-        public {{nickname}}Request({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})             
+        public {{vendorExtensions.x-operationId}}Request({{#allParams}}{{{dataType}}} {{paramName}}{{^required}} = null{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})             
         {
             {{#allParams}}
             this.{{baseName}} = {{paramName}};

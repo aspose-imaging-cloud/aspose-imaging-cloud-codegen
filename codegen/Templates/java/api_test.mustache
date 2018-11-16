@@ -26,7 +26,7 @@ public class {{classname}}Test extends ApiTester {
 	    this.createApiInstances();
     }
     {{#operations}}{{#operation}}
-	private {{nickname}}Request {{nickname}}Request;
+	private {{vendorExtensions.x-operationId}}Request {{nickname}}Request;
 	
     /**
      * Test operation: {{summary}}
@@ -42,7 +42,7 @@ public class {{classname}}Test extends ApiTester {
         {{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}byte[]{{/isFile}} {{paramName}} = null;
         {{/allParams}}
 		String outName = name + "_specific." + "imageFormatExtension";
-		{{nickname}}Request = new {{nickname}}Request({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+		{{nickname}}Request = new {{vendorExtensions.x-operationId}}Request({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 		
 		Method propertiesTester = {{classname}}Test.class.getDeclaredMethod("{{operationId}}PropertiesTester", ImagingResponse.class, ImagingResponse.class);
 		propertiesTester.setAccessible(true);
@@ -83,7 +83,7 @@ public class {{classname}}Test extends ApiTester {
     }
 	
 	/**
-	 * Invokes GET request for {{operationId}} operation. Used indirectly by method reference.
+	 * Invokes GET request for {{vendorExtensions.x-operationId}} operation. Used indirectly by method reference.
 	 * @param name Image file name
 	 * @param outPath Out path
 	 * @return API response
