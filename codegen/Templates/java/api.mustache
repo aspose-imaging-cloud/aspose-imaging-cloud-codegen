@@ -174,36 +174,24 @@ public class {{classname}}
       {
           {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
       }{{/formParams}}
-	
-	  try 
-      {                               
-	     {{#vendorExtensions}}
-	      byte[] response = this.apiInvoker.invokeApi(
-              resourcePath, 
-              "{{httpMethod}}", 
-              {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
-              {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
-              formParams);
-	      {{#returnType}}
-				
-		  if (response == null)
-		  {
-			  return null;
-		  }
+	  {{#vendorExtensions}}
+	  byte[] response = this.apiInvoker.invokeApi(
+          resourcePath, 
+          "{{httpMethod}}", 
+          {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
+          {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
+          formParams);
 		  
-		  return {{#x-binary-result}}response{{/x-binary-result}}{{^x-binary-result}}SerializationHelper.deserialize(new String(response), {{returnType}}.class){{/x-binary-result}};
-		  {{/returnType}}
-		  {{/vendorExtensions}}
-      } 
-      catch (ApiException ex) 
-      {
-          if (ex.ErrorCode == 404) 
-          {
-              return null;
-          }
-                
-          throw ex;                
-      }
+	  {{#returnType}}
+	  {{#x-binary-result}}return response;{{/x-binary-result}}
+	  {{^x-binary-result}}if (response == null)
+	  {
+	      return null;
+	  }
+	  
+	  return SerializationHelper.deserialize(new String(response), {{returnType}}.class);{{/x-binary-result}}
+	  {{/returnType}}
+	  {{/vendorExtensions}}
     }
   
     {{/operation}}

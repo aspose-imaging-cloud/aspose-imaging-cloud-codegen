@@ -13,6 +13,7 @@ Directory | Description
 --------- | -----------
 [.NET SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet) | SDK for .NET Framework 2.0 and higher
 [Java SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java) | SDK for JDK 1.6 and higher
+[Android SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-android) | Android instructions for Java SDK
 
 To use these SDKs, you will need App SID and App Key which can be looked up at [Aspose Cloud Dashboard](https://dashboard.aspose.cloud/#/apps) (free registration in Aspose Cloud is required for this).
 
