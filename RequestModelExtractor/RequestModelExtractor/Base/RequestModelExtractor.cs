@@ -138,7 +138,10 @@ namespace RequestModelExtractor.Base
         /// </summary>
         /// <param name="initialApiText">The initial API text.</param>
         /// <returns></returns>
-        protected abstract string PreProcessRequestModel(string initialApiText);
+        protected virtual string PreProcessRequestModel(string initialApiText)
+        {
+            return initialApiText;
+        }
 
         #endregion
     }

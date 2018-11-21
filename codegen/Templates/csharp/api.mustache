@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Aspose" file="{{classname}}.cs">
-//   Copyright (c) 2018 Aspose Pty Ltd.
+//   Copyright (c) 2018 Aspose Pty Ltd. All rights reserved.
 // </copyright>
 // <summary>
 //   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -41,14 +41,14 @@ namespace {{packageName}}
         #region Fields
 
         /// <summary>
+        /// The configuration
+        /// </summary>
+        public readonly Configuration Configuration;
+		
+        /// <summary>
         /// The API invoker
         /// </summary>
         private readonly ApiInvoker apiInvoker;
-
-        /// <summary>
-        /// The configuration
-        /// </summary>
-        private readonly Configuration configuration;
 
         #endregion
 
@@ -160,11 +160,11 @@ namespace {{packageName}}
         /// <param name="configuration">Configuration settings</param>
         private {{classname}}(Configuration configuration)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
 
             var requestHandlers = new List<IRequestHandler>();
-            requestHandlers.Add(new OAuthRequestHandler(this.configuration));
-            requestHandlers.Add(new DebugLogRequestHandler(this.configuration));
+            requestHandlers.Add(new OAuthRequestHandler(this.Configuration));
+            requestHandlers.Add(new DebugLogRequestHandler(this.Configuration));
             requestHandlers.Add(new ApiExceptionRequestHandler());
             this.apiInvoker = new ApiInvoker(requestHandlers);
         }
@@ -178,9 +178,9 @@ namespace {{packageName}}
         /// <summary>
         /// {{summary}} {{notes}}
         /// </summary>
-        /// <param name="request">Request. <see cref="{{nickname}}Request" /></param> 
+        /// <param name="request">Request. <see cref="{{vendorExtensions.x-operationId}}Request" /></param> 
         /// <returns><see cref="{{#returnType}}{{returnType}}{{/returnType}}"/></returns>            
-        public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}}({{nickname}}Request request)
+        public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-operationId}}({{vendorExtensions.x-operationId}}Request request)
         {
 {{#allParams}}{{#required}}            // verify the required parameter '{{paramName}}' is set
             if (request.{{baseName}} == null) 
@@ -189,7 +189,7 @@ namespace {{packageName}}
             }
 
 {{/required}}{{/allParams}}            // create path and map variables
-            var resourcePath = this.configuration.GetApiRootUrl() + "{{path}}";
+            var resourcePath = this.Configuration.GetApiRootUrl() + "{{path}}";
             resourcePath = Regex
                         .Replace(resourcePath, "\\*", string.Empty)
                         .Replace("&amp;", "&")
@@ -219,45 +219,23 @@ namespace {{packageName}}
                 {{#isFile}}formParams.Add("{{paramName}}", this.apiInvoker.ToFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.Add("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
             }
             {{/formParams}}
-            try 
-            {                               
-			{{#vendorExtensions}}
-				var response = this.apiInvoker.InvokeApi(
-                        resourcePath, 
-                        "{{httpMethod}}", 
-                        {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
-                        {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
-                        formParams);
-				{{#returnType}}
-				
-				if (response == null)
-				{
-					return null;
-				}
-				
-				object finalResponse;
-				if (typeof({{returnType}}) == typeof(System.IO.Stream))
-				{
-					finalResponse = response;
-				}
-				else
-				{
-					finalResponse = SerializationHelper.Deserialize<{{returnType}}>(StreamHelper.ToString(response));
-				}
-				
-				return ({{returnType}})finalResponse;
-				{{/returnType}}
-				{{/vendorExtensions}}
-            } 
-            catch (ApiException ex) 
-            {
-                if (ex.ErrorCode == 404) 
-                {
-                    return null;
-                }
-                
-                throw;                
-            }
+            {{#vendorExtensions}}
+			var response = this.apiInvoker.InvokeApi(
+                resourcePath, 
+                "{{httpMethod}}", 
+                {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
+                {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
+                formParams);
+			{{#returnType}}
+	        {{#x-binary-result}}return response;{{/x-binary-result}}
+	        {{^x-binary-result}}if (response == null)
+	        {
+	            return null;
+	        }
+	  
+	        return ({{returnType}})SerializationHelper.Deserialize<{{returnType}}>(StreamHelper.ToString(response));{{/x-binary-result}}
+			{{/returnType}}
+			{{/vendorExtensions}}
         }
 		
         {{/operation}}   

@@ -7,7 +7,6 @@ import {{invokerPackage}}.internal.*;
 import {{invokerPackage}}.internal.requesthandlers.*;
 import {{modelPackage}}.requests.*;
 import com.aspose.imaging.cloud.sdk.stablemodel.*;
-import java.io.File;
 
 {{^fullJavaUtil}}
 import java.util.HashMap;
@@ -23,15 +22,15 @@ public class {{classname}}
 	 */
 	public static final String Version = "{{artifactVersion}}";
 
+	    /**
+     * The configuration
+     */
+    public Configuration Configuration;
+	
 	/**
 	 * The API invoker
 	 */
     private ApiInvoker apiInvoker;
-
-    /**
-     * The configuration
-     */
-    private Configuration configuration;
 
     /**
      * Initializes a new instance of the {{classname}} class.
@@ -124,10 +123,10 @@ public class {{classname}}
      */
     private void init{{classname}}(Configuration configuration)
     {
-        this.configuration = configuration;
+        this.Configuration = configuration;
 		IRequestHandler[] requestHandlers = new IRequestHandler[3];
-		requestHandlers[0] = new OAuthRequestHandler(this.configuration);
-        requestHandlers[1] = new DebugLogRequestHandler(this.configuration);
+		requestHandlers[0] = new OAuthRequestHandler(this.Configuration);
+        requestHandlers[1] = new DebugLogRequestHandler(this.Configuration);
         requestHandlers[2] = new ApiExceptionRequestHandler();
         this.apiInvoker = new ApiInvoker(requestHandlers);
     }
@@ -153,14 +152,14 @@ public class {{classname}}
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public ApiResponse {{operationId}}({{nickname}}Request request) throws Exception 
+    public {{#vendorExtensions}}{{#x-binary-result}}byte[]{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}} {{operationId}}({{vendorExtensions.x-operationId}}Request request) throws Exception 
     {
       {{#allParams}}{{#required}} // verify the required parameter 'request.{{paramName}}' is set
       if (request.{{paramName}} == null) {
         throw new ApiException(400, "Missing the required parameter 'request.{{paramName}}' when calling {{operationId}}");
       }
       {{/required}}{{/allParams}}// create path and map variables
-      String resourcePath = this.configuration.getApiRootUrl() + "{{path}}";
+      String resourcePath = this.Configuration.getApiRootUrl() + "{{path}}";
 	  {{#headerParams}}{{#-first}}HashMap<String,String> headerParams = new HashMap<String,String>();{{/-first}}{{/headerParams}}
 	  HashMap<String, Object> formParams = new HashMap<String, Object>();
 	  {{#pathParams}}resourcePath = UrlHelper.addPathParameter(resourcePath, "{{paramName}}", request.{{baseName}});
@@ -175,70 +174,24 @@ public class {{classname}}
       {
           {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
       }{{/formParams}}
-	
-	  try 
-      {                               
-	     {{#vendorExtensions}}
-	      byte[] response = this.apiInvoker.invokeApi(
-              resourcePath, 
-              "{{httpMethod}}", 
-              {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
-              {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
-              formParams);
-	      {{#returnType}}
-				
-		  if (response == null)
-		  {
-			  return null;
-		  }
-		
-	      ApiResponse finalResponse; 
-		  if ({{returnType}}.class.getName().equals(File.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(response, null, null);
-		  }
-		  else if ({{returnType}}.class.getName().equals(ImagingResponse.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, null, SerializationHelper.deserialize(new String(response), ImagingResponse.class));
-		  }
-		  else if ({{returnType}}.class.getName().equals(SaaSposeResponse.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SaaSposeResponse.class), null);
-		  }
-		  else if ({{returnType}}.class.getName().equals(ImageDuplicatesSet.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageDuplicatesSet.class), null);
-		  }
-		  else if ({{returnType}}.class.getName().equals(ImageFeatures.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), ImageFeatures.class), null);
-		  }
-		  else if ({{returnType}}.class.getName().equals(SearchContextStatus.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchContextStatus.class), null);
-		  }
-		  else if ({{returnType}}.class.getName().equals(SearchResultsSet.class.getName()))
-		  {
-			  finalResponse = new ApiResponse(null, SerializationHelper.deserialize(new String(response), SearchResultsSet.class), null);
-		  }
-		  else
-		  {
-		  	  finalResponse = new ApiResponse(null, null, null);
-		  }
-				
-		  return finalResponse;
-		  {{/returnType}}
-		  {{/vendorExtensions}}
-      } 
-      catch (ApiException ex) 
-      {
-          if (ex.ErrorCode == 404) 
-          {
-              return null;
-          }
-                
-          throw ex;                
-      }
+	  {{#vendorExtensions}}
+	  byte[] response = this.apiInvoker.invokeApi(
+          resourcePath, 
+          "{{httpMethod}}", 
+          {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
+          {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
+          formParams);
+		  
+	  {{#returnType}}
+	  {{#x-binary-result}}return response;{{/x-binary-result}}
+	  {{^x-binary-result}}if (response == null)
+	  {
+	      return null;
+	  }
+	  
+	  return SerializationHelper.deserialize(new String(response), {{returnType}}.class);{{/x-binary-result}}
+	  {{/returnType}}
+	  {{/vendorExtensions}}
     }
   
     {{/operation}}

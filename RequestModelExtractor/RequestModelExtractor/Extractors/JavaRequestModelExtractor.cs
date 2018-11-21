@@ -25,8 +25,6 @@
 
 namespace RequestModelExtractor.Extractors
 {
-    using System.Text.RegularExpressions;
-
     /// <inheritdoc />
     internal class JavaRequestModelExtractor : Base.RequestModelExtractor
     {
@@ -35,46 +33,5 @@ namespace RequestModelExtractor.Extractors
 
         /// <inheritdoc />
         protected override string CopyrightStart => @"/\*";
-
-        /// <inheritdoc />
-        protected override string PreProcessRequestModel(string initialApiText)
-        {
-            string requestClassName;
-            int nextIndex;
-            char nextChar;
-            MatchCollection matchCollection = Regex.Matches(initialApiText, "[a-zA-Z0-9_]+Request");
-            foreach (Match match in matchCollection)
-            {
-                nextIndex = match.Index + match.Length;
-                if (nextIndex < initialApiText.Length)
-                {
-                    nextChar = initialApiText[match.Index + match.Length];
-                    if (char.IsLetterOrDigit(nextChar))
-                    {
-                        // skip other classes
-                        continue;
-                    }
-
-                    if (nextChar == '(')
-                    {
-                        // skip other methods, but not needed constructors
-                        nextIndex = initialApiText.IndexOf(")", nextIndex) + 1;
-                        nextChar = initialApiText[nextIndex];
-                        if (nextChar == '.' || nextChar == ';')
-                        {
-                            continue;
-                        }
-                    }
-                }
-
-                requestClassName = initialApiText.Substring(match.Index, match.Length);
-                requestClassName = char.ToUpper(requestClassName[0]) +
-                                   requestClassName.Substring(1, requestClassName.Length - 1);
-                initialApiText = initialApiText.Remove(match.Index, match.Length)
-                    .Insert(match.Index, requestClassName);
-            }
-
-            return initialApiText;
-        }
     }
 }
