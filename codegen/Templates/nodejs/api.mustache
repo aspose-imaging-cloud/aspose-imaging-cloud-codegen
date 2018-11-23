@@ -1,0 +1,98 @@
+{{>licenseInfo}}
+import * as request from "request";
+import { Configuration } from "./internal/configuration";
+import { ObjectSerializer } from "./internal/object-serializer";
+import { addQueryParameterToUrl, invokeApiMethod } from "./internal/request-helper";
+import * as model from "./model/model";
+
+export { ApiError } from "./internal/api-error";
+export * from "./model/model";
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+/**
+ * Library for communicating with Aspose.Imaging Cloud API
+ */
+export class {{classname}} {
+    /**
+     * API configuration
+     */
+    public configuration: Configuration;
+
+    /**
+     * @param appSID App SID.
+     * @param appKey App key.
+     * @param baseUrl Base api Url.
+     * @param debugMode A value indicating whether debug mode. In debug mode all requests and responses are logged to console.
+     * @param version API version.
+     */
+    constructor(appSID: string, appKey: string, baseUrl?: string, debugMode?: boolean, version?: string) {
+        this.configuration = new Configuration(appSID, appKey, baseUrl, debugMode, version);
+    }
+
+{{#operation}}
+    /**
+     * {{&summary}}{{#notes}} {{&notes}}{{/notes}}
+     * @param requestObj contains request parameters
+     */
+    public async {{nickname}}(requestObj: model.{{#vendorExtensions}}{{x-operationId}}{{/vendorExtensions}}Request): Promise<{{#vendorExtensions}}{{#x-binary-result}}Buffer{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}model.{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}}> {
+        if (requestObj === null || requestObj === undefined) {
+            throw new Error('Required parameter "requestObj" was null or undefined when calling {{nickname}}.');
+        }
+
+        {{#hasQueryParams}}let{{/hasQueryParams}}{{^hasQueryParams}}const{{/hasQueryParams}} localVarPath = this.configuration.getApiBaseUrl() + "{{{path}}}"{{#pathParams}}
+            .replace("{" + "{{paramName}}" + "}", String(requestObj.{{paramName}})){{/pathParams}};
+        const queryParameters: any = {};
+        {{#hasHeaderParams}}
+        const headerParams: any = {};
+        {{/hasHeaderParams}}
+{{#allParams}}{{#required}}
+        // verify required parameter 'requestObj.{{paramName}}' is not null or undefined
+        if (requestObj.{{paramName}} === null || requestObj.{{paramName}} === undefined) {
+            throw new Error('Required parameter "requestObj.{{paramName}}" was null or undefined when calling {{nickname}}.');
+        }
+{{/required}}{{/allParams}}        
+{{#queryParams}}        
+        localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "{{paramName}}", requestObj.{{paramName}});
+{{/queryParams}}
+{{#headerParams}}
+        headerParams.{{baseName}} = ObjectSerializer.serialize(requestObj.{{paramName}}, "{{{dataType}}}");
+{{/headerParams}}
+        const requestOptions: request.Options = {
+            method: "{{httpMethod}}",
+            qs: queryParameters,
+            {{#hasHeaderParams}}
+            headers: headerParams,
+            {{/hasHeaderParams}}
+            uri: localVarPath,
+{{#isResponseFile}}
+            encoding: null,
+{{/isResponseFile}}
+{{^formParams}}
+            json: true,
+{{/formParams}}
+{{#formParams}}
+            body: requestObj.{{paramName}},
+{{/formParams}}
+        };
+         
+        const response = await invokeApiMethod(requestOptions, this.configuration);
+        let result = null;
+        {{#vendorExtensions}}
+        {{#returnType}}
+        {{#x-binary-result}}result = response.body;{{/x-binary-result}}
+        {{^x-binary-result}}
+        if (response.body) {
+            result = ObjectSerializer.deserialize(response.body, "{{{returnType}}}");
+        }{{/x-binary-result}}
+        {{/returnType}}
+        {{/vendorExtensions}}
+        return Promise.resolve(result);        
+    }
+
+{{/operation}}
+}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
