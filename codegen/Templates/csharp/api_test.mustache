@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Aspose" file="{{classname}}Tests.cs">
-//   Copyright (c) 2018 Aspose Pty Ltd.
+//   Copyright (c) 2018 Aspose Pty Ltd. All rights reserved.
 // </copyright>
 // <summary>
 //   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -68,22 +68,22 @@ namespace {{packageName}}.Test.Api
         {{#operations}}
 		{{#operation}}
         /// <summary>
-        /// Test {{operationId}}
+        /// Test {{vendorExtensions.x-operationId}}
         /// </summary>
         [Test]
-        public void {{operationId}}Test()
+        public void {{vendorExtensions.x-operationId}}Test()
         {
-			// TODO uncomment below to test {{operationId}}
+			// TODO uncomment below to test {{vendorExtensions.x-operationId}}
 			// you can use storageApi class member to manipulate your Aspose Cloud Storage (like uploading needed files or checking if they exist for tests)
 			
 			/* 
             {{#allParams}}
             {{{dataType}}} {{paramName}} = null;
             {{/allParams}}
-			var request = new {{nickname}}Request({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+			var request = new {{vendorExtensions.x-operationId}}Request({{#allParams}}{{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
             {{#returnType}}
 			
-			var response = {{/returnType}}imagingApi.{{operationId}}(request);
+			var response = {{/returnType}}imagingApi.{{vendorExtensions.x-operationId}}(request);
 			
             {{#returnType}}
 			bool resultShouldHaveBinaryData = false;

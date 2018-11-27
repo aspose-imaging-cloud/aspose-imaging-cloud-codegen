@@ -1,7 +1,7 @@
 {{#operations}}{{#operation}}/*
 * --------------------------------------------------------------------------------------------------------------------
-* <copyright company="Aspose" file="{{nickname}}Request.java">
-*   Copyright (c) 2018 Aspose Pty Ltd.
+* <copyright company="Aspose" file="{{vendorExtensions.x-operationId}}Request.java">
+*   Copyright (c) 2018 Aspose Pty Ltd. All rights reserved.
 * </copyright>
 * <summary>
 *   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,18 +28,18 @@
 package {{modelPackage}}.requests;
 
 /**
-* Class that holds parameters for {{nickname}} request invocation.
+* Class that holds parameters for {{vendorExtensions.x-operationId}} request invocation.
 **/   
-public class {{nickname}}Request
+public class {{vendorExtensions.x-operationId}}Request
 {
     {{#hasParams}}
 	/**
-	* Initializes a new instance of the {{nickname}}Request class.   
+	* Initializes a new instance of the {{vendorExtensions.x-operationId}}Request class.   
     {{#allParams}}
     * @param {{paramName}} {{description}}
     {{/allParams}}
 	**/
-    public {{nickname}}Request({{#allParams}}{{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}byte[]{{/isFile}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})             
+    public {{vendorExtensions.x-operationId}}Request({{#allParams}}{{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}byte[]{{/isFile}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})             
     {
         {{#allParams}}
         this.{{baseName}} = {{paramName}};

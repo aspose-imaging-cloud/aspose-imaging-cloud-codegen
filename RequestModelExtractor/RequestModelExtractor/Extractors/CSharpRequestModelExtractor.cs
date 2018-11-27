@@ -33,11 +33,5 @@ namespace RequestModelExtractor.Extractors
 
         /// <inheritdoc />
         protected override string CopyrightStart => "// -";
-
-        /// <inheritdoc />
-        protected override string PreProcessRequestModel(string initialApiText)
-        {
-            return initialApiText;
-        }
     }
 }
