@@ -15,7 +15,19 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
     /**
      * Attribute type map
      */
-    public static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+    public static attributeTypeMap: Array<{
+        /**
+         * Attribute name
+         */
+        name: string, 
+        /**
+         * Attribute base name
+         */
+        baseName: string,
+        /**
+         * Attribute type
+         */
+        type: string}> = [
         {{#vars}}
         {
             name: "{{name}}",
