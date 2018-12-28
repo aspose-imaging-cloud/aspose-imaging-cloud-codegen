@@ -1,0 +1,139 @@
+{{>licenseInfo}}
+import { SaaSposeResponse } from "./stable-model";
+
+export * from "./stable-model";
+
+{{#models}}
+{{#model}}
+{{#description}}
+/**
+ * {{{description}}}
+ */
+{{/description}}
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
+
+    /**
+     * Attribute type map
+     */
+    public static attributeTypeMap: Array<{
+        /**
+         * Attribute name
+         */
+        name: string, 
+        /**
+         * Attribute base name
+         */
+        baseName: string,
+        /**
+         * Attribute type
+         */
+        type: string}> = [
+        {{#vars}}
+        {
+            name: "{{name}}",
+            baseName: "{{baseName}}",
+            type: "{{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}}",
+        }{{#hasMore}},        
+        {{/hasMore}}        
+        {{/vars}}
+    ];
+
+    /**
+     * Returns attribute type map
+     */
+    public static getAttributeTypeMap() {
+        {{#parent}}
+        return super.getAttributeTypeMap().concat({{classname}}.attributeTypeMap);
+        {{/parent}}
+        {{^parent}}
+        return {{classname}}.attributeTypeMap;
+        {{/parent}}
+    }
+
+{{#vars}}
+{{#description}}
+    /**
+     * {{{description}}}
+     */
+{{/description}}
+    public {{name}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
+    
+{{/vars}}
+    public constructor(init?: Partial<{{classname}}>) {
+        {{#parent}}super(init);{{/parent}}
+        Object.assign(this, init);
+    }        
+}
+
+{{#hasEnums}}
+// tslint:disable:quotemark
+// tslint:disable-next-line:no-namespace
+export namespace {{classname}} {
+{{#vars}}
+{{#isEnum}}
+    export enum {{enumName}} {
+        {{#allowableValues}}
+        {{#enumVars}}
+        {{name}} = {{{value}}} as any,
+        {{/enumVars}}
+        {{/allowableValues}}
+    }
+{{/isEnum}}
+{{/vars}}
+}
+// tslint:enable:quotemark
+{{/hasEnums}}
+{{/model}}
+{{/models}}
+const enumsMap = {
+    {{#models}}
+        {{#model}}
+            {{#hasEnums}}
+                {{#vars}}
+                    {{#isEnum}}
+    "{{datatypeWithEnum}}": {{datatypeWithEnum}},
+                    {{/isEnum}}
+                {{/vars}}
+            {{/hasEnums}}
+        {{/model}}
+    {{/models}}
+};
+
+const typeMap = {
+    {{#models}}
+        {{#model}}
+            {{classname}},
+        {{/model}}
+    {{/models}}
+};
+
+export {enumsMap, typeMap};
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+{{#operation}}
+
+/**
+ * Request model for {{vendorExtensions.x-operationId}} operation.
+ */
+export class {{vendorExtensions.x-operationId}}Request {
+{{#hasParams}}
+{{#allParams}}                
+    /**
+     * {{^description}}Gets or sets {{paramName}}{{/description}}{{#description}}{{{description}}}{{/description}}
+     */
+    public {{paramName}}: {{{dataType}}};
+    {{#hasMore}}
+
+    {{/hasMore}}
+    {{/allParams}}
+    {{/hasParams}}
+    
+    public constructor(init?: Partial<{{vendorExtensions.x-operationId}}Request>) {        
+        Object.assign(this, init);
+    } 
+}
+{{/operation}}
+{{/operations}}
+{{/apis}}
+{{/apiInfo}}
