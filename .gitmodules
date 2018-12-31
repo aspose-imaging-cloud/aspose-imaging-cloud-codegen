@@ -4,3 +4,6 @@
 [submodule "SDKs/Java"]
 	path = SDKs/Java
 	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-java
+[submodule "SDKs/NodeJS"]
+	path = SDKs/NodeJS
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-node
