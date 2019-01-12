@@ -1,0 +1,13 @@
+SwaggerClient-php/.gitignore
+SwaggerClient-php/docs/**/*.md
+SwaggerClient-php/test/**/*.php
+SwaggerClient-php/README.md
+SwaggerClient-php/git_push.sh
+SwaggerClient-php/.travis.yml
+SwaggerClient-php/.php_cs
+SwaggerClient-php/composer.json
+SwaggerClient-php/phpunit.xml.dist
+SwaggerClient-php/lib/Configuration.php
+SwaggerClient-php/lib/HeaderSelector.php
+SwaggerClient-php/lib/ObjectSerializer.php
+SwaggerClient-php/lib/ApiException.php

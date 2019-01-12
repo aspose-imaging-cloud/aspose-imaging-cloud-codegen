@@ -7,3 +7,6 @@
 [submodule "SDKs/NodeJS"]
 	path = SDKs/NodeJS
 	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-node
+[submodule "SDKs/PHP"]
+	path = SDKs/PHP
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-php
