@@ -52,13 +52,27 @@ export class {{classname}} {
         if (requestObj.{{paramName}} === null || requestObj.{{paramName}} === undefined) {
             throw new Error('Required parameter "requestObj.{{paramName}}" was null or undefined when calling {{nickname}}.');
         }
-{{/required}}{{/allParams}}        
+{{/required}}{{/allParams}}
+{{#hasFormParams}}
+        const formParams: { [key: string]: any } = {};
+{{/hasFormParams}}        
 {{#queryParams}}        
         localVarPath = addQueryParameterToUrl(localVarPath, queryParameters, "{{paramName}}", requestObj.{{paramName}});
 {{/queryParams}}
 {{#headerParams}}
         headerParams.{{baseName}} = ObjectSerializer.serialize(requestObj.{{paramName}}, "{{{dataType}}}");
 {{/headerParams}}
+{{#formParams}}
+        if (requestObj.{{paramName}} !== undefined) {
+            const paramKey = "{{baseName}}";
+            {{#isFile}}
+            formParams[paramKey] = requestObj.{{paramName}};
+            {{/isFile}}
+            {{^isFile}}
+            formParams[paramKey]  = ObjectSerializer.serialize(requestObj.{{paramName}}, "{{{dataType}}}");
+            {{/isFile}}
+        }
+{{/formParams}}
         const requestOptions: request.Options = {
             method: "{{httpMethod}}",
             qs: queryParameters,
@@ -72,11 +86,16 @@ export class {{classname}} {
 {{^formParams}}
             json: true,
 {{/formParams}}
-{{#formParams}}
-            body: requestObj.{{paramName}},
-{{/formParams}}
+{{#bodyParam}}
+            body: ObjectSerializer.serialize(requestObj.{{paramName}}, requestObj.{{paramName}}.constructor.name === "Object" ? "{{{dataType}}}" : requestObj.{{paramName}}.constructor.name),
+{{/bodyParam}}
         };
-         
+        
+{{#hasFormParams}}
+        if (Object.keys(formParams).length > 0) {
+            requestOptions.formData = formParams;
+        }
+{{/hasFormParams}}
         const response = await invokeApiMethod(requestOptions, this.configuration);
         let result = null;
         {{#vendorExtensions}}

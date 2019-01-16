@@ -178,7 +178,6 @@ class {{classname}}
         $headers = $initialInfo['headers'];
         $initialHttpBody = $initialInfo['httpBody'];
         $httpBody = '';
-        $multipart = $initialInfo['multipart'];
 
         // for model (json/xml)
         if (isset($initialHttpBody)) {
@@ -188,33 +187,28 @@ class {{classname}}
                 $httpBody = \GuzzleHttp\json_encode($httpBody);
             }
         } elseif (count($formParams) > 0) {
-            if ($multipart && count($formParams) > 1) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue,
-                        'headers' => [
-                            'Content-Disposition' => 'form-data',
-                            'Content-Type' => 'application/octet-stream',
-                            'Content-Length' => strlen($formParamValue)
-                        ]
-                    ];
-                }
-                
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
+            $multipartContents = [];
+            foreach ($formParams as $formParamName => $formParamValue) {
+                $multipartContents[] = [
+                    'name' => $formParamName,
+                    'contents' => $formParamValue,
+                    'headers' => [
+                        'Content-Disposition' => 'form-data',
+                        'Content-Length' => strlen($formParamValue)
+                    ]
+                ];
+            }
+            
+            if (!preg_match('/\bv1\\.\b/', $this->getConfig()->getApiVersion())) {
+                $boundary = sha1(uniqid('', true));
+                $headers['Content-Type'] = "multipart/form-data; boundary=" . $boundary;
+                $httpBody = new MultipartStream($multipartContents, $boundary);
             } else {
-                // for HTTP post (form)
+                unset($headers['Content-Type']);
                 $httpBody = reset($formParams);
             }
         }
-
-        if (isset($httpBody))
-        {
-            $headers['Content-Length'] = strlen($httpBody);
-        }
-
+        
         if ($this->configuration->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->configuration->getAccessToken();
         }

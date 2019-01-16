@@ -128,7 +128,7 @@ public class {{classname}}
 		requestHandlers[0] = new OAuthRequestHandler(this.Configuration);
         requestHandlers[1] = new DebugLogRequestHandler(this.Configuration);
         requestHandlers[2] = new ApiExceptionRequestHandler();
-        this.apiInvoker = new ApiInvoker(requestHandlers);
+        this.apiInvoker = new ApiInvoker(requestHandlers, this.Configuration);
     }
 	
     {{#operations}}
@@ -169,10 +169,18 @@ public class {{classname}}
       {
           headerParams.Add("{{paramName}}", this.apiInvoker.toPathValue(request.{{baseName}})); // header parameter
       }{{/headerParams}}
-	  {{#hasBodyParam}}String postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}}); // http body (model) parameter{{/hasBodyParam}}
+	  {{#hasBodyParam}}String postBody = null; ;
+      if (request.{{bodyParam.baseName}} instanceof String)
+      {
+        postBody = request.{{bodyParam.baseName}}
+      }
+      else
+      {
+        postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}})
+      }{{/hasBodyParam}}
 	  {{#formParams}}if (request.{{baseName}} != null) 
       {
-          {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}}); // form parameter{{/isFile}}
+          {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}});{{/isFile}}
       }{{/formParams}}
 	  {{#vendorExtensions}}
 	  byte[] response = this.apiInvoker.invokeApi(

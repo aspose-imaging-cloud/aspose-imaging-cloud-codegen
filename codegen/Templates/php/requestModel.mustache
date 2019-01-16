@@ -152,7 +152,7 @@ class {{vendorExtensions.x-operationId}}Request extends ImagingRequest
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
-        $multipart = false;
+        $headers = [];
     
     {{#pathParams}}
         // path params
@@ -202,9 +202,6 @@ class {{vendorExtensions.x-operationId}}Request extends ImagingRequest
         {{#formParams}}
         // form params
         if ($this->{{paramName}} !== null) {
-            {{#isFile}}
-            $multipart = true;
-            {{/isFile}}
             $formParams[ObjectSerializer::toStandardName('{{paramName}}')] = ObjectSerializer::toFormValue($this->{{paramName}});
         }
         {{/formParams}}
@@ -219,12 +216,6 @@ class {{vendorExtensions.x-operationId}}Request extends ImagingRequest
             }
         }
         {{/bodyParams}}
-
-        if ($multipart) {
-            $headers['Content-Type'] = 'multipart/form-data';
-        } else {
-            $headers['Content-Type'] = 'application/json';
-        }
         
         $httpInfo = array(
             "resourcePath" => $resourcePath,
@@ -232,8 +223,7 @@ class {{vendorExtensions.x-operationId}}Request extends ImagingRequest
             "headerParams" => $headerParams,
             "headers" => $headers,
             "httpBody" => $httpBody,
-            "multipart" => $multipart,
-            "formParams" => $formParams
+            "formParams" => $formParams,
         );
         
         return $httpInfo;        
