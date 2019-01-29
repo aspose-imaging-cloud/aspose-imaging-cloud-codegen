@@ -39,6 +39,7 @@
     <Compile Include="Base\RequestModelExtractor.cs" />
     <Compile Include="Extractors\CSharpRequestModelExtractor.cs" />
     <Compile Include="Extractors\JavaRequestModelExtractor.cs" />
+    <Compile Include="Extractors\PhpRequestModelExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

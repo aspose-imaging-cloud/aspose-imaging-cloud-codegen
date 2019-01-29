@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Aspose" file="AssemblyInfo.cs">
-//   Copyright (c) 2018 Aspose.Imaging for Cloud
+//   Copyright (c) 2019 Aspose Pty Ltd.
 // </copyright>
 // <summary>
 //   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aspose")]
 [assembly: AssemblyProduct("RequestModelExtractor")]
-[assembly: AssemblyCopyright("2018 © Aspose Pty Ltd.")]
+[assembly: AssemblyCopyright("2019 © Aspose Pty Ltd.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Aspose" file="Program.cs">
+// <copyright company="Aspose" file="PhpRequestModelExtractor.cs">
 //   Copyright (c) 2019 Aspose Pty Ltd. All rights reserved.
 // </copyright>
 // <summary>
@@ -23,14 +23,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace RequestModelExtractor
+namespace RequestModelExtractor.Extractors
 {
-    class Program
+    /// <inheritdoc />
+    internal class PhpRequestModelExtractor : Base.RequestModelExtractor
     {
-        static void Main(string[] args)
-        {
-            Base.RequestModelExtractor extractor = Base.RequestModelExtractor.Create(args[2]);
-            extractor.ExtractRequestModel(args[0], args[1]);
-        }
+        /// <inheritdoc />
+        protected override string FileExtension => "php";
+
+        /// <inheritdoc />
+        protected override string CopyrightStart => @"\<\?php";
     }
 }

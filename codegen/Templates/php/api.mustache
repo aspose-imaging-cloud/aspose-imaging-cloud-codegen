@@ -1,0 +1,392 @@
+<?php
+/**
+ * --------------------------------------------------------------------------------------------------------------------
+ * <copyright company="Aspose" file="ImagingApi.php">
+ *   Copyright (c) 2019 Aspose Pty Ltd. All rights reserved.
+ * </copyright>
+ * <summary>
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ * 
+ *  The above copyright notice and this permission notice shall be included in all
+ *  copies or substantial portions of the Software.
+ * 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *  SOFTWARE.
+ * </summary>
+ * --------------------------------------------------------------------------------------------------------------------
+ */
+
+namespace {{invokerPackage}};
+
+use \GuzzleHttp\Client;
+use \GuzzleHttp\Stream;
+use \GuzzleHttp\ClientInterface;
+use \GuzzleHttp\Exception\RequestException;
+use \GuzzleHttp\Psr7\MultipartStream;
+use \GuzzleHttp\Psr7\Request;
+use \GuzzleHttp\RequestOptions;
+use \{{modelPackage}}\Requests;
+
+/**
+ * Aspose.Imaging Cloud APIs.
+ */
+class {{classname}}
+{
+    /**
+     * Stores client instance
+     *
+     * @var \GuzzleHttp\ClientInterface client for calling the API
+     */
+    private $client;
+
+    /**
+     * Stores configuration
+     *
+     * @var \Aspose\Imaging\Configuration Configuration info
+     */
+    private $configuration;
+  
+    /**
+     * Initialize a new instance of ImagingApi
+     *
+     * @param \Aspose\Imaging\Configuration   $config Configuration info
+     * @param \GuzzleHttp\ClientInterface   $client PSR-7 compliant HTTP client
+     */
+    public function __construct($config = null, $client = null)
+    {
+        $this->client = $client ?: new Client();
+        $this->configuration = $config ?: new Configuration();
+        $this->requestToken();
+    }
+
+    /**
+     * Gets the configuration.
+     * @return \Aspose\Imaging\Configuration
+     */
+    public function getConfig() 
+    {
+        return $this->configuration;
+    }
+    
+{{#operations}}
+{{#operation}}
+    /**
+{{#summary}}
+     * {{{summary}}}
+{{/summary}}
+     *
+{{#description}}
+     * {{.}}
+     *
+{{/description}}
+     * @param \Aspose\Imaging\Model\Requests\{{vendorExtensions.x-operationId}}Request $request Request object for operation
+     *
+     * @throws \{{invokerPackage}}\ApiException Throws on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return {{#vendorExtensions}}{{#x-binary-result}}\Psr\Http\Message\StreamInterface{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}}
+     */
+    public function {{operationId}}($request)
+    {
+        try {
+            $returnType = '{{returnType}}';
+            $isBinary = {{#vendorExtensions}}{{#x-binary-result}}true{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}false{{/x-binary-result}}{{/vendorExtensions}};
+            $hasReturnType = {{#returnType}}true{{/returnType}}{{^returnType}}false{{/returnType}};
+            $request = $this->getHttpRequest($request, '{{httpMethod}}');
+            $options = $this->createHttpClientOptions();
+            
+            try {
+                $response = $this->client->send($request, $options);
+                return $this->processResponse($response, $hasReturnType, $returnType, $isBinary);
+            } catch (RequestException $e) {
+                $this->processException($e);
+            }
+        }
+        catch(RepeatRequestException $e) {
+            return {{operationId}}($request);
+        } 
+    }
+
+    /**
+{{#summary}}
+     * {{{summary}}}
+     * Performs operation asynchronously.
+{{/summary}}
+     *
+{{#description}}
+     * {{.}}
+     *
+{{/description}}
+     * @param \Aspose\Imaging\Model\Requests\{{vendorExtensions.x-operationId}}Request $request Request object for operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function {{operationId}}Async($request) 
+    {
+        $returnType = '{{returnType}}';
+        $isBinary = {{#vendorExtensions}}{{#x-binary-result}}true{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}false{{/x-binary-result}}{{/vendorExtensions}};
+        $hasReturnType = {{#returnType}}true{{/returnType}}{{^returnType}}false{{/returnType}};
+        $request = $this->getHttpRequest($request, '{{httpMethod}}');
+        $options = $this->createHttpClientOptions();
+
+        return $this->client
+            ->sendAsync($request, $options)
+            ->then(
+                function ($response) use ($hasReturnType, $returnType, $isBinary) {
+                    return $this->processResponse($response, $hasReturnType, $returnType, $isBinary);
+                },
+                function ($exception) use ($request) {
+                    try 
+                    {
+                        $this->processException($exception);
+                    }                   
+                    catch(RepeatRequestException $e) {
+                        return {{operationId}}Async($request);
+                    } 
+                }
+            );
+    }
+    
+    {{/operation}}
+    {{/operations}}
+    /**
+     * Prepares HTTP request for Imaging API operation
+     *
+     * @param \Aspose\Imaging\Model\Requests\ImagingRequest $request Imaging request object for operation
+     * @param string $httpMethod HTTP request method
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    private function getHttpRequest($imagingRequest, $httpMethod)
+    {
+        $initialInfo = $imagingRequest->getHttpRequestInfo($this->configuration);
+        $resourcePath = $initialInfo['resourcePath'];
+        $formParams = $initialInfo['formParams'];
+        $queryParams = $initialInfo['queryParams'];
+        $headerParams = $initialInfo['headerParams'];
+        $headers = $initialInfo['headers'];
+        $initialHttpBody = $initialInfo['httpBody'];
+        $httpBody = '';
+
+        // for model (json/xml)
+        if (isset($initialHttpBody)) {
+            $httpBody = $initialHttpBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            $multipartContents = [];
+            foreach ($formParams as $formParamName => $formParamValue) {
+                $multipartContents[] = [
+                    'name' => $formParamName,
+                    'contents' => $formParamValue,
+                    'headers' => [
+                        'Content-Disposition' => 'form-data',
+                        'Content-Length' => strlen($formParamValue)
+                    ]
+                ];
+            }
+            
+            if (!preg_match('/\bv1\\.\b/', $this->getConfig()->getApiVersion())) {
+                $boundary = sha1(uniqid('', true));
+                $headers['Content-Type'] = "multipart/form-data; boundary=" . $boundary;
+                $httpBody = new MultipartStream($multipartContents, $boundary);
+            } else {
+                unset($headers['Content-Type']);
+                $httpBody = reset($formParams);
+            }
+        }
+        
+        if ($this->configuration->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->configuration->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->configuration->getUserAgent()) {
+            $defaultHeaders['x-aspose-client'] = $this->configuration->getUserAgent();
+        }
+    
+        $defaultHeaders['x-aspose-client-version'] = $this->configuration->getClientVersion();
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+    
+        $req = new Request(
+            $httpMethod,
+            $this->configuration->getApiBaseUrl() . "/" . $resourcePath,
+            $headers,
+            $httpBody
+        );
+        if ($this->configuration->getDebug()) {
+            $this->writeRequestLog($httpMethod, $this->configuration->getApiBaseUrl() . "/" . $resourcePath, $headers, $httpBody);
+        }
+        
+        return $req;
+    }
+    
+    /**
+     * Processes Imaging API response
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response Imaging operation response
+     * @param bool $hasReturnType If response has a return type
+     * @param string $returnType Return type of response
+     * @param bool $isBinary If response should be binary
+     *
+     * @throws \Aspose\Imaging\ApiException
+     * @throws \Aspose\Imaging\RepeatRequestException
+     * @return mixed
+     */
+    private function processResponse($response, $hasReturnType, $returnType, $isBinary)
+    {
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            if ($statusCode === 401) {
+                $this->requestToken();
+                throw new RepeatRequestException("Request must be retried", $statusCode);
+            }
+          
+            throw new ApiException(
+                sprintf('[%d] Error connecting to the API (%s); Body: (%s)', $statusCode, $exception->getRequest()->getUri(), $response->getBody()), $statusCode
+            );
+        }
+        
+        $result = null;
+
+        if ($hasReturnType)
+        {
+            $responseBody = $response->getBody();
+            if ($isBinary) {
+                return $responseBody;
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+            
+            $result = ObjectSerializer::deserialize($content, $returnType, []);
+            
+            if ($this->configuration->getDebug()) {
+                $this->writeResponseLog($statusCode, $response->getHeaders(), $result);
+            }
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Processes the exception caught during request execution
+     *
+     * @param \GuzzleHttp\Exception\RequestException $exception The initial exception
+     *
+     * @throws \Aspose\Imaging\ApiException
+     * @throws \Aspose\Imaging\RepeatRequestException
+     */
+    private function processException($exception)
+    {
+        $response = $exception->getResponse();
+        $statusCode = isset($response) ? $response->getStatusCode() : null;
+          
+        if ($exception instanceof RepeatRequestException) {
+            $this->refreshToken();
+            throw new RepeatRequestException("Request must be retried", $statusCode);
+        }
+
+        throw new ApiException(
+            sprintf('[%d] Error connecting to the API (%s); Message: (%s)', $statusCode, $exception->getRequest()->getUri(), $exception->getMessage()), $statusCode
+        );
+    }
+    
+    /**
+     * Create http client options
+     *
+     * @throws \RuntimeException Throws on file opening failure
+     * @return array HTTP client options
+     */
+    private function createHttpClientOptions() 
+    {
+        $options = [];
+        if ($this->configuration->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->configuration->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->configuration->getDebugFile());
+            }
+        }
+        
+        $options[RequestOptions::TIMEOUT] = 1200;
+        return $options;
+    }
+    
+    /**
+     * Executes response logging
+     */
+    private function writeResponseLog($statusCode, $headers, $body)
+    {
+        $logInfo = "\nResponse: $statusCode \n";
+        echo $logInfo . $this->writeHeadersAndBody($logInfo, $headers, $body);
+    }
+    
+    /**
+     * Executes request logging
+     */
+    private function writeRequestLog($method, $url, $headers, $body)
+    {
+        $logInfo = "\n$method: $url \n";
+        echo $logInfo . $this->writeHeadersAndBody($logInfo, $headers, $body);
+    }
+    
+    /**
+     * Executes header and boy formatting
+     */
+    private function writeHeadersAndBody($logInfo, $headers, $body)
+    {
+        foreach ($headers as $name => $value) {
+            $logInfo .= $name . ': ' . $value . "\n";
+        }
+        
+        return $logInfo .= "Body: " . $body . "\n";
+    }
+  
+    /**
+     * Gets a request token from server
+     */
+    private function requestToken() 
+    {
+        $requestUrl = $this->configuration->getBaseUrl() . "/oauth2/token";
+        $postData = "grant_type=client_credentials" . "&client_id=" . $this->configuration->getAppSid() . "&client_secret=" . $this->configuration->getAppKey();
+        $response = $this->client->send(new Request('POST', $requestUrl, [], $postData));
+        $result = json_decode($response->getBody()->getContents(), true);
+        $this->configuration->setAccessToken($result["access_token"]);
+        $this->configuration->setRefreshToken($result["refresh_token"]);
+    }
+  
+    /**
+     * Refresh token. OBSOLETE WILL BE REMOVED SOON
+     */
+    private function refreshToken() 
+    {
+        $requestUrl = $this->configuration->getBaseUrl() . "/oauth2/token";
+        $postData = "grant_type=refresh_token&refresh_token=" . $this->configuration->getRefreshToken();
+        $response = $this->client->send(new Request('POST', $requestUrl, [], $postData));
+        $result = json_decode($response->getBody()->getContents(), true);
+        $this->configuration->setAccessToken($result["access_token"]);
+        $this->configuration->setRefreshToken($result["refresh_token"]);
+    }
+}
+{{>requestModel}}
