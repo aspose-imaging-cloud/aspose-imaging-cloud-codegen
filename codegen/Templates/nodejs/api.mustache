@@ -36,7 +36,7 @@ export class {{classname}} {
      * {{&summary}}{{#notes}} {{&notes}}{{/notes}}
      * @param requestObj contains request parameters
      */
-    public async {{nickname}}(requestObj: model.{{#vendorExtensions}}{{x-operationId}}{{/vendorExtensions}}Request): Promise<{{#vendorExtensions}}{{#x-binary-result}}Buffer{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}model.{{{returnType}}}{{/returnType}}{{^returnType}}any{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}}> {
+    public async {{nickname}}(requestObj: model.{{#vendorExtensions}}{{x-operationId}}{{/vendorExtensions}}Request): Promise<{{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}Buffer{{/x-binary-result}}{{^x-binary-result}}model.{{{returnType}}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}any{{/returnType}}> {
         if (requestObj === null || requestObj === undefined) {
             throw new Error('Required parameter "requestObj" was null or undefined when calling {{nickname}}.');
         }
@@ -96,10 +96,10 @@ export class {{classname}} {
             requestOptions.formData = formParams;
         }
 {{/hasFormParams}}
-        const response = await invokeApiMethod(requestOptions, this.configuration);
-        let result = null;
+        {{#returnType}}const response = {{/returnType}}await invokeApiMethod(requestOptions, this.configuration);
         {{#vendorExtensions}}
         {{#returnType}}
+        let result = null;
         {{#x-binary-result}}result = response.body;{{/x-binary-result}}
         {{^x-binary-result}}
         if (response.body) {
@@ -107,7 +107,7 @@ export class {{classname}} {
         }{{/x-binary-result}}
         {{/returnType}}
         {{/vendorExtensions}}
-        return Promise.resolve(result);        
+        return Promise.resolve({{#returnType}}result{{/returnType}});        
     }
 
 {{/operation}}

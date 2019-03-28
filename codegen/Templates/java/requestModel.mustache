@@ -33,19 +33,19 @@ package {{modelPackage}}.requests;
 public class {{vendorExtensions.x-operationId}}Request
 {
     {{#hasParams}}
-	/**
-	* Initializes a new instance of the {{vendorExtensions.x-operationId}}Request class.   
+    /**
+    * Initializes a new instance of the {{vendorExtensions.x-operationId}}Request class.   
     {{#allParams}}
     * @param {{paramName}} {{description}}
     {{/allParams}}
-	**/
+    **/
     public {{vendorExtensions.x-operationId}}Request({{#allParams}}{{^isFile}}{{{dataType}}}{{/isFile}}{{#isFile}}byte[]{{/isFile}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})             
     {
         {{#allParams}}
         this.{{baseName}} = {{paramName}};
         {{/allParams}}   
     }
-		
+        
     {{#allParams}}                
     /**
     * {{^description}}Gets or sets {{baseName}}{{/description}}{{#description}}{{{description}}}{{/description}}

@@ -22,10 +22,6 @@ docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
 
-src/Aspose.Imaging.Cloud.Sdk/Model/SaaSposeResponse.cs
-src/Aspose.Imaging.Cloud.Sdk/Model/HttpStatusCode.cs
-src/Aspose.Imaging.Cloud.Sdk/StableModel/*.cs
-src/Aspose.Imaging.Cloud.Sdk/StableModel/**/*.cs
 src/Aspose.Imaging.Cloud.Sdk/Client/*.cs
 src/Aspose.Imaging.Cloud.Sdk/Client/**/*.cs
 src/Aspose.Imaging.Cloud.Sdk/Properties/*.cs

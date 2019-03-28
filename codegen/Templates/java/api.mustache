@@ -17,19 +17,19 @@ import java.util.HashMap;
  */
 public class {{classname}} 
 {
-	/**
-	 * Current SDK version
-	 */
-	public static final String Version = "{{artifactVersion}}";
+    /**
+     * Current SDK version
+     */
+    public static final String Version = "{{artifactVersion}}";
 
-	    /**
+    /**
      * The configuration
      */
     public Configuration Configuration;
-	
-	/**
-	 * The API invoker
-	 */
+    
+    /**
+     * The API invoker
+     */
     private ApiInvoker apiInvoker;
 
     /**
@@ -39,10 +39,10 @@ public class {{classname}}
      */
     public {{classname}}(String appKey, String appSid)
     {
-		Configuration config = new Configuration();
-		config.AppKey = appKey;
-		config.AppSid = appSid;
-	    this.init{{classname}}(config);
+        Configuration config = new Configuration();
+        config.AppKey = appKey;
+        config.AppSid = appSid;
+        this.init{{classname}}(config);
     }
 
     /**
@@ -53,11 +53,11 @@ public class {{classname}}
      */
     public {{classname}}(String appKey, String appSid, String baseUrl)
     {
-	    Configuration config = new Configuration();
-		config.AppKey = appKey;
-		config.AppSid = appSid;
-		config.setApiBaseUrl(baseUrl);
-		this.init{{classname}}(config);
+        Configuration config = new Configuration();
+        config.AppKey = appKey;
+        config.AppSid = appSid;
+        config.setApiBaseUrl(baseUrl);
+        this.init{{classname}}(config);
     }
 
     /**
@@ -67,14 +67,14 @@ public class {{classname}}
      * @param baseUrl The base URL.
      * @param apiVersion API version.
      */
-    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion)
+    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion) throws Exception
     {
-	    Configuration config = new Configuration();
-		config.AppKey = appKey;
-		config.AppSid = appSid;
-		config.setApiBaseUrl(baseUrl);
-		config.setApiVersion(apiVersion);
-		this.init{{classname}}(config);
+        Configuration config = new Configuration();
+        config.AppKey = appKey;
+        config.AppSid = appSid;
+        config.setApiBaseUrl(baseUrl);
+        config.setApiVersion(apiVersion);
+        this.init{{classname}}(config);
     }
 
     /**
@@ -85,38 +85,17 @@ public class {{classname}}
      * @param apiVersion API version.
      * @param debug If debug mode is enabled.
      */
-    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, Boolean debug)
+    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, Boolean debug) throws Exception
     {
-	    Configuration config = new Configuration();
-		config.AppKey = appKey;
-		config.AppSid = appSid;
-		config.setApiBaseUrl(baseUrl);
-		config.setApiVersion(apiVersion);
-		config.setDebugMode(debug);
-		this.init{{classname}}(config);
+        Configuration config = new Configuration();
+        config.AppKey = appKey;
+        config.AppSid = appSid;
+        config.setApiBaseUrl(baseUrl);
+        config.setApiVersion(apiVersion);
+        config.setDebugMode(debug);
+        this.init{{classname}}(config);
     }
     
-    /**
-     * Initializes a new instance of the {{classname}} class.
-     * @param appKey The app key.
-     * @param appSid The app SID.
-     * @param baseUrl The base URL.
-     * @param apiVersion API version.
-     * @param authType Authentication type.
-     * @param debug If debug mode is enabled.
-     */
-    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, AuthType authType, Boolean debug)
-    {
-	    Configuration config = new Configuration();
-		config.AppKey = appKey;
-		config.AppSid = appSid;
-		config.setApiBaseUrl(baseUrl);
-		config.setApiVersion(apiVersion);
-		config.setDebugMode(debug);
-		config.AuthType = authType;
-		this.init{{classname}}(config);
-    }
-
     /**
      * Initializes a new instance of the {{classname}} class.
      * @param configuration Configuration settings.
@@ -124,13 +103,13 @@ public class {{classname}}
     private void init{{classname}}(Configuration configuration)
     {
         this.Configuration = configuration;
-		IRequestHandler[] requestHandlers = new IRequestHandler[3];
-		requestHandlers[0] = new OAuthRequestHandler(this.Configuration);
+        IRequestHandler[] requestHandlers = new IRequestHandler[3];
+        requestHandlers[0] = new AuthRequestHandler(this.Configuration);
         requestHandlers[1] = new DebugLogRequestHandler(this.Configuration);
         requestHandlers[2] = new ApiExceptionRequestHandler();
         this.apiInvoker = new ApiInvoker(requestHandlers, this.Configuration);
     }
-	
+    
     {{#operations}}
     {{#operation}}
     /**
@@ -152,24 +131,24 @@ public class {{classname}}
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public {{#vendorExtensions}}{{#x-binary-result}}byte[]{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}} {{operationId}}({{vendorExtensions.x-operationId}}Request request) throws Exception 
+    public {{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}byte[]{{/x-binary-result}}{{^x-binary-result}}{{returnType}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{vendorExtensions.x-operationId}}Request request) throws Exception 
     {
       {{#allParams}}{{#required}} // verify the required parameter 'request.{{paramName}}' is set
-      if (request.{{paramName}} == null) {
+      if (request.{{baseName}}== null) {
         throw new ApiException(400, "Missing the required parameter 'request.{{paramName}}' when calling {{operationId}}");
       }
       {{/required}}{{/allParams}}// create path and map variables
       String resourcePath = this.Configuration.getApiRootUrl() + "{{path}}";
-	  {{#headerParams}}{{#-first}}HashMap<String,String> headerParams = new HashMap<String,String>();{{/-first}}{{/headerParams}}
-	  HashMap<String, Object> formParams = new HashMap<String, Object>();
-	  {{#pathParams}}resourcePath = UrlHelper.addPathParameter(resourcePath, "{{paramName}}", request.{{baseName}});
+      {{#headerParams}}{{#-first}}HashMap<String,String> headerParams = new HashMap<String,String>();{{/-first}}{{/headerParams}}
+      HashMap<String, Object> formParams = new HashMap<String, Object>();
+      {{#pathParams}}resourcePath = UrlHelper.addPathParameter(resourcePath, "{{paramName}}", request.{{baseName}});
       {{/pathParams}}{{#queryParams}}
-	  resourcePath = UrlHelper.addQueryParameterToUrl(resourcePath, "{{paramName}}", request.{{baseName}});{{/queryParams}}
-	  {{#headerParams}}if (request.{{paramName}} != null) 
+      resourcePath = UrlHelper.addQueryParameterToUrl(resourcePath, "{{paramName}}", request.{{baseName}});{{/queryParams}}
+      {{#headerParams}}if (request.{{paramName}} != null) 
       {
           headerParams.Add("{{paramName}}", this.apiInvoker.toPathValue(request.{{baseName}})); // header parameter
       }{{/headerParams}}
-	  {{#hasBodyParam}}String postBody = null;
+      {{#hasBodyParam}}String postBody = null;
       if (request.{{bodyParam.baseName}} instanceof String)
       {
         postBody = request.{{bodyParam.baseName}}
@@ -178,28 +157,28 @@ public class {{classname}}
       {
         postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}})
       }{{/hasBodyParam}}
-	  {{#formParams}}if (request.{{baseName}} != null) 
+      {{#formParams}}if (request.{{baseName}} != null) 
       {
           {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}});{{/isFile}}
       }{{/formParams}}
-	  {{#vendorExtensions}}
-	  byte[] response = this.apiInvoker.invokeApi(
+      {{#vendorExtensions}}
+      {{#returnType}}byte[] response = {{/returnType}}this.apiInvoker.invokeApi(
           resourcePath, 
           "{{httpMethod}}", 
           {{#hasBodyParam}}postBody{{/hasBodyParam}}{{^hasBodyParam}}null{{/hasBodyParam}}, 
           {{#hasHeaderParams}}headerParams{{/hasHeaderParams}}{{^hasHeaderParams}}null{{/hasHeaderParams}}, 
           formParams);
-		  
-	  {{#returnType}}
-	  {{#x-binary-result}}return response;{{/x-binary-result}}
-	  {{^x-binary-result}}if (response == null)
-	  {
-	      return null;
-	  }
-	  
-	  return SerializationHelper.deserialize(new String(response), {{returnType}}.class);{{/x-binary-result}}
-	  {{/returnType}}
-	  {{/vendorExtensions}}
+          
+      {{#returnType}}
+      {{#x-binary-result}}return response;{{/x-binary-result}}
+      {{^x-binary-result}}if (response == null)
+      {
+          return null;
+      }
+      
+      return SerializationHelper.deserialize(new String(response), {{returnType}}.class);{{/x-binary-result}}
+      {{/returnType}}
+      {{/vendorExtensions}}
     }
   
     {{/operation}}

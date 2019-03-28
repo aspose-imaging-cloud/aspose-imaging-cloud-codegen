@@ -19,7 +19,7 @@ public class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{{#parcela
       {{/isContainer}}
       {{/items}}
     {{/items.isEnum}}
-  @JsonProperty("{{baseName}}")
+  @JsonProperty("{{name}}")
   {{#withXml}}
     {{^isContainer}}
   @JacksonXmlProperty({{#isXmlAttribute}}isAttribute = true, {{/isXmlAttribute}}{{#xmlNamespace}}namespace="{{xmlNamespace}}", {{/xmlNamespace}}localName = "{{#xmlName}}{{xmlName}}{{/xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}")
