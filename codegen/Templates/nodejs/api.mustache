@@ -65,12 +65,21 @@ export class {{classname}} {
 {{#formParams}}
         if (requestObj.{{paramName}} !== undefined) {
             const paramKey = "{{baseName}}";
+            let formValue = null;
             {{#isFile}}
-            formParams[paramKey] = requestObj.{{paramName}};
+            formValue = requestObj.{{paramName}};
             {{/isFile}}
             {{^isFile}}
-            formParams[paramKey]  = ObjectSerializer.serialize(requestObj.{{paramName}}, "{{{dataType}}}");
+            formValue = ObjectSerializer.serialize(requestObj.{{paramName}}, "{{{dataType}}}");
             {{/isFile}}
+            formParams[paramKey] = {
+                value: formValue,
+                options: {
+                    filename: "{{baseName}}",
+                    contentType: "application/octet-stream",
+                    knownLength: formValue.length,
+                },
+            };
         }
 {{/formParams}}
         const requestOptions: request.Options = {
