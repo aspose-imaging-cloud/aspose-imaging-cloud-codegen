@@ -29,13 +29,10 @@
 namespace {{invokerPackage}};
 
 use \GuzzleHttp\Client;
-use \GuzzleHttp\Stream;
-use \GuzzleHttp\ClientInterface;
 use \GuzzleHttp\Exception\RequestException;
 use \GuzzleHttp\Psr7\MultipartStream;
 use \GuzzleHttp\Psr7\Request;
 use \GuzzleHttp\RequestOptions;
-use \{{modelPackage}}\Requests;
 use \{{invokerPackage}}\ObjectSerializer;
 
 /**
@@ -179,11 +176,14 @@ class {{classname}}
         } elseif (count($formParams) > 0) {
             $multipartContents = [];
             foreach ($formParams as $formParamName => $formParamValue) {
+            $multipartContents = [];
+            foreach ($formParams as $formParamName => $formParamValue) {
                 $multipartContents[] = [
                     'name' => $formParamName,
                     'contents' => $formParamValue,
+                    'filename' => $formParamName,
                     'headers' => [
-                        'Content-Disposition' => 'form-data',
+                        'Content-Type' => 'application/octet-stream',
                         'Content-Length' => strlen($formParamValue)
                     ]
                 ];
