@@ -176,8 +176,6 @@ class {{classname}}
         } elseif (count($formParams) > 0) {
             $multipartContents = [];
             foreach ($formParams as $formParamName => $formParamValue) {
-            $multipartContents = [];
-            foreach ($formParams as $formParamName => $formParamValue) {
                 $multipartContents[] = [
                     'name' => $formParamName,
                     'contents' => $formParamValue,
