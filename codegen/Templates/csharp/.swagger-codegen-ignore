@@ -28,6 +28,7 @@ src/Aspose.Imaging.Cloud.Sdk/Properties/*.cs
 src/Aspose.Imaging.Cloud.Sdk/Properties/**/*.cs
 src/Aspose.Imaging.Cloud.Sdk/*.nuspec
 src/Aspose.Imaging.Cloud.Sdk/Aspose.Imaging.Cloud.Sdk.csproj
+src/Aspose.Imaging.Cloud.Sdk/*.config
 
 # skip tests
 src/Aspose.Imaging.Cloud.Sdk.Test

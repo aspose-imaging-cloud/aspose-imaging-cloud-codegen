@@ -64,6 +64,12 @@ class {{classname}}
     {
         $this->client = $client ?: new Client();
         $this->configuration = $config ?: new Configuration();
+        $execTime = (int)ini_get('max_execution_time');
+        if ($execTime > 0 && $execTime < 500)
+        {
+            set_time_limit(500);
+        }
+
         $this->requestToken();
     }
 
