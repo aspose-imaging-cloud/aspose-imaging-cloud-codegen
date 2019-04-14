@@ -117,7 +117,7 @@ public class {{classname}}
      * {{notes}}
      * @param request Holds parameters for this request invocation.
      {{#returnType}}
-     * @return {{returnType}}
+     * @return {{#vendorExtensions}}{{#x-binary-result}}byte[]{{/x-binary-result}}{{^x-binary-result}}{{returnType}}{{/x-binary-result}}{{/vendorExtensions}}
      {{/returnType}}
      * @throws Exception 
      {{#isDeprecated}}
