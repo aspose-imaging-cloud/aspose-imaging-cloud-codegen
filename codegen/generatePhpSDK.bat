@@ -8,7 +8,7 @@ copy /y Templates\php\.swagger-codegen-ignore %sdkfolder%\.swagger-codegen-ignor
 if exist "%sdkfolder%\lib\Aspose\Imaging\Model\" del /S /Q "%sdkfolder%\lib\Aspose\Imaging\Model\" || goto :error
 if exist "%sdkfolder%\lib\Aspose\Imaging\ImagingApi.php" del /Q "%sdkfolder%\lib\Aspose\Imaging\ImagingApi.php" || goto :error
 
-java -jar Tools\swagger-codegen-cli-2.3.1.jar generate -i https://api-qa.aspose.cloud/v3.0/imaging/swagger/spec -l php -t Templates\php -o %sdkfolder% --invoker-package Aspose\Imaging --model-package Model --api-package Api || goto :error
+java -jar Tools\swagger-codegen-cli-2.3.1.jar generate -i https://api-qa.aspose.cloud/v3.0/imaging/swagger/sdkspec -l php -t Templates\php -o %sdkfolder% --invoker-package Aspose\Imaging --model-package Model --api-package Api || goto :error
 
 move "%sdkfolder%\SwaggerClient-php\lib" "%sdkfolder%\SwaggerClient-php\copy-lib"
 xcopy /s /y %sdkfolder%\SwaggerClient-php %sdkfolder%
