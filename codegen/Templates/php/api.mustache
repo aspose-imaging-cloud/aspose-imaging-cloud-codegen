@@ -29,13 +29,11 @@
 namespace {{invokerPackage}};
 
 use \GuzzleHttp\Client;
-use \GuzzleHttp\Stream;
-use \GuzzleHttp\ClientInterface;
 use \GuzzleHttp\Exception\RequestException;
 use \GuzzleHttp\Psr7\MultipartStream;
 use \GuzzleHttp\Psr7\Request;
 use \GuzzleHttp\RequestOptions;
-use \{{modelPackage}}\Requests;
+use \{{invokerPackage}}\ObjectSerializer;
 
 /**
  * Aspose.Imaging Cloud APIs.
@@ -66,6 +64,12 @@ class {{classname}}
     {
         $this->client = $client ?: new Client();
         $this->configuration = $config ?: new Configuration();
+        $execTime = (int)ini_get('max_execution_time');
+        if ($execTime > 0 && $execTime < 500)
+        {
+            set_time_limit(500);
+        }
+
         $this->requestToken();
     }
 
@@ -93,27 +97,22 @@ class {{classname}}
      *
      * @throws \{{invokerPackage}}\ApiException Throws on non-2xx response
      * @throws \InvalidArgumentException
-     * @return {{#vendorExtensions}}{{#x-binary-result}}\Psr\Http\Message\StreamInterface{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}{{/x-binary-result}}{{/vendorExtensions}}
+     * @return {{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}\Psr\Http\Message\StreamInterface{{/x-binary-result}}{{^x-binary-result}}{{{returnType}}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}void{{/returnType}}
      */
     public function {{operationId}}($request)
     {
-        try {
-            $returnType = '{{returnType}}';
-            $isBinary = {{#vendorExtensions}}{{#x-binary-result}}true{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}false{{/x-binary-result}}{{/vendorExtensions}};
-            $hasReturnType = {{#returnType}}true{{/returnType}}{{^returnType}}false{{/returnType}};
-            $request = $this->getHttpRequest($request, '{{httpMethod}}');
-            $options = $this->createHttpClientOptions();
+        $returnType = '{{returnType}}';
+        $isBinary = {{#vendorExtensions}}{{#x-binary-result}}true{{/x-binary-result}}{{/vendorExtensions}}{{#vendorExtensions}}{{^x-binary-result}}false{{/x-binary-result}}{{/vendorExtensions}};
+        $hasReturnType = {{#returnType}}true{{/returnType}}{{^returnType}}false{{/returnType}};
+        $request = $this->getHttpRequest($request, '{{httpMethod}}');
+        $options = $this->createHttpClientOptions();
             
-            try {
-                $response = $this->client->send($request, $options);
-                return $this->processResponse($response, $hasReturnType, $returnType, $isBinary);
-            } catch (RequestException $e) {
-                $this->processException($e);
-            }
+        try {
+            $response = $this->client->send($request, $options);
+            return $this->processResponse($request, $response, $hasReturnType, $returnType, $isBinary);
+        } catch (RequestException $e) {
+            $this->processException($e);
         }
-        catch(RepeatRequestException $e) {
-            return {{operationId}}($request);
-        } 
     }
 
     /**
@@ -142,17 +141,11 @@ class {{classname}}
         return $this->client
             ->sendAsync($request, $options)
             ->then(
-                function ($response) use ($hasReturnType, $returnType, $isBinary) {
-                    return $this->processResponse($response, $hasReturnType, $returnType, $isBinary);
+                function ($response) use ($request, $hasReturnType, $returnType, $isBinary) {
+                    return $this->processResponse($request, $response, $hasReturnType, $returnType, $isBinary);
                 },
                 function ($exception) use ($request) {
-                    try 
-                    {
-                        $this->processException($exception);
-                    }                   
-                    catch(RepeatRequestException $e) {
-                        return {{operationId}}Async($request);
-                    } 
+                    $this->processException($exception);
                 }
             );
     }
@@ -192,21 +185,17 @@ class {{classname}}
                 $multipartContents[] = [
                     'name' => $formParamName,
                     'contents' => $formParamValue,
+                    'filename' => $formParamName,
                     'headers' => [
-                        'Content-Disposition' => 'form-data',
+                        'Content-Type' => 'application/octet-stream',
                         'Content-Length' => strlen($formParamValue)
                     ]
                 ];
             }
             
-            if (!preg_match('/\bv1\\.\b/', $this->getConfig()->getApiVersion())) {
-                $boundary = sha1(uniqid('', true));
-                $headers['Content-Type'] = "multipart/form-data; boundary=" . $boundary;
-                $httpBody = new MultipartStream($multipartContents, $boundary);
-            } else {
-                unset($headers['Content-Type']);
-                $httpBody = reset($formParams);
-            }
+            $boundary = sha1(uniqid('', true));
+            $headers['Content-Type'] = "multipart/form-data; boundary=" . $boundary;
+            $httpBody = new MultipartStream($multipartContents, $boundary);
         }
         
         if ($this->configuration->getAccessToken() !== null) {
@@ -242,27 +231,32 @@ class {{classname}}
     /**
      * Processes Imaging API response
      *
+     * @param \GuzzleHttp\Psr7\Request $request Imaging operation request
      * @param \Psr\Http\Message\ResponseInterface $response Imaging operation response
      * @param bool $hasReturnType If response has a return type
      * @param string $returnType Return type of response
      * @param bool $isBinary If response should be binary
      *
      * @throws \Aspose\Imaging\ApiException
-     * @throws \Aspose\Imaging\RepeatRequestException
      * @return mixed
      */
-    private function processResponse($response, $hasReturnType, $returnType, $isBinary)
+    private function processResponse($request, $response, $hasReturnType, $returnType, $isBinary)
     {
         $statusCode = $response->getStatusCode();
 
         if ($statusCode < 200 || $statusCode > 299) {
-            if ($statusCode === 401) {
-                $this->requestToken();
-                throw new RepeatRequestException("Request must be retried", $statusCode);
+            $body = $response->getBody();
+            $error = null;
+            if (isset($body)) {
+                try {
+                    $error = ObjectSerializer::deserialize($body->getContents(), '\Aspose\Imaging\Model\Error', []);
+                } catch (\Throwable $th) {
+                    // suppress exception
+                }
             }
-          
+
             throw new ApiException(
-                sprintf('[%d] Error connecting to the API (%s); Body: (%s)', $statusCode, $exception->getRequest()->getUri(), $response->getBody()), $statusCode
+                sprintf('[%d] Error connecting to the API (%s); Body: (%s)', $statusCode, $request->getUri(), $response->getBody()), $statusCode, $error
             );
         }
         
@@ -296,17 +290,11 @@ class {{classname}}
      * @param \GuzzleHttp\Exception\RequestException $exception The initial exception
      *
      * @throws \Aspose\Imaging\ApiException
-     * @throws \Aspose\Imaging\RepeatRequestException
      */
     private function processException($exception)
     {
         $response = $exception->getResponse();
         $statusCode = isset($response) ? $response->getStatusCode() : null;
-          
-        if ($exception instanceof RepeatRequestException) {
-            $this->refreshToken();
-            throw new RepeatRequestException("Request must be retried", $statusCode);
-        }
 
         throw new ApiException(
             sprintf('[%d] Error connecting to the API (%s); Message: (%s)', $statusCode, $exception->getRequest()->getUri(), $exception->getMessage()), $statusCode
@@ -368,25 +356,14 @@ class {{classname}}
      */
     private function requestToken() 
     {
-        $requestUrl = $this->configuration->getBaseUrl() . "/oauth2/token";
+        $requestUrl = $this->configuration->getBaseUrl() . "/connect/token";
         $postData = "grant_type=client_credentials" . "&client_id=" . $this->configuration->getAppSid() . "&client_secret=" . $this->configuration->getAppKey();
-        $response = $this->client->send(new Request('POST', $requestUrl, [], $postData));
+        $headers = [];
+        $headers['Content-Type'] = "application/x-www-form-urlencoded";
+        $headers['Content-Length'] = strlen($postData);
+        $response = $this->client->send(new Request('POST', $requestUrl, $headers, $postData));
         $result = json_decode($response->getBody()->getContents(), true);
         $this->configuration->setAccessToken($result["access_token"]);
-        $this->configuration->setRefreshToken($result["refresh_token"]);
-    }
-  
-    /**
-     * Refresh token. OBSOLETE WILL BE REMOVED SOON
-     */
-    private function refreshToken() 
-    {
-        $requestUrl = $this->configuration->getBaseUrl() . "/oauth2/token";
-        $postData = "grant_type=refresh_token&refresh_token=" . $this->configuration->getRefreshToken();
-        $response = $this->client->send(new Request('POST', $requestUrl, [], $postData));
-        $result = json_decode($response->getBody()->getContents(), true);
-        $this->configuration->setAccessToken($result["access_token"]);
-        $this->configuration->setRefreshToken($result["refresh_token"]);
     }
 }
 {{>requestModel}}
