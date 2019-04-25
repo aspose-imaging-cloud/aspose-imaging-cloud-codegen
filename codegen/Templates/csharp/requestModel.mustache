@@ -30,7 +30,7 @@ namespace {{packageName}}.Model.Requests
   using {{packageName}}.Model; 
 
   /// <summary>
-  /// Request model for <see cref="Aspose.Imaging.Cloud.Sdk.ImagingApi.{{vendorExtensions.x-operationId}}" /> operation.
+  /// Request model for <see cref="Aspose.Imaging.Cloud.Sdk.Api.ImagingApi.{{vendorExtensions.x-operationId}}" /> operation.
   /// </summary>  
   public class {{vendorExtensions.x-operationId}}Request{{#vendorExtensions}}{{#x-csharp-implements}} : {{x-csharp-implements}} {{/x-csharp-implements}}  {{/vendorExtensions}}
   {
@@ -54,7 +54,7 @@ namespace {{packageName}}.Model.Requests
             this.{{baseName}} = {{paramName}};
             {{/allParams}}   
         }
-		
+        
         {{#allParams}}                
         /// <summary>
         /// {{^description}}Gets or sets {{baseName}}{{/description}}{{#description}}{{{description}}}{{/description}}

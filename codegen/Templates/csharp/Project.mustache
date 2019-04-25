@@ -1,94 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="{{^netStandard}}12.0{{/netStandard}}{{#netStandard}}14.0{{/netStandard}}" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    {{#netStandard}}<MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>{{/netStandard}}
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{{packageGuid}}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>{{packageName}}</RootNamespace>
-    <AssemblyName>{{packageName}}</AssemblyName>
-    {{#netStandard}}
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    {{/netStandard}}
-    {{^netStandard}}
-    {{^supportsUWP}}
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    {{/supportsUWP}}
-    {{#supportsUWP}}
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
-    {{/supportsUWP}}
-    {{/netStandard}}
-    <FileAlignment>512</FileAlignment>
+    <TargetFrameworks>net2;net3.5;net4;net45;netstandard2.0</TargetFrameworks>
+    <AssemblyVersion>19.3.0.0</AssemblyVersion>
+    <FileVersion>19.3.0.0</FileVersion>
+    <Version>19.3.0</Version>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+  <PropertyGroup>
+    <PackageId>Aspose.Imaging-Cloud</PackageId>
+    <PackageVersion>19.3.0</PackageVersion>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>aspose imaging cloud rest api sdk image bmp dicom dng djvu djv emf gif jpg jpe jpeg jpeg2000 jp2 jpx jpm j2k odg png psd tiff tif webp wmf reverse search</PackageTags>
+    <PackageLicenseUrl>https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet</PackageProjectUrl>
+    <PackageIconUrl>https://www.aspose.cloud/templates/aspose/App_Themes/V3/images/imaging/272x272/aspose_imaging-for-net-min.png</PackageIconUrl>
+    <PackageReleaseNotes>Improvements.</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Title>Aspose.Imaging Cloud .NET SDK</Title>
+    <Company>Aspose</Company>
+    <Authors>Aspose</Authors>
+    <ProductName>Aspose.Imaging Cloud .NET SDK</ProductName>
+    <ProductVersion>19.3</ProductVersion>
+    <Description>Aspose.Imaging Cloud lets you use a REST API to inspect, convert, and transform images in the cloud; do reverse image search. It supports the most popular image formats such as PSD, PNG, GIF, BMP, TIFF, and JPEG, and conversion between them.
+
+      Aspose.Imaging Cloud also provides a rich set of features for manipulating images on-the-fly with cloud based image transformations. You can resize, crop and/or rotate images various ways by simply creating a request that includes the correct transformation instructions.
+
+      The most demanding imaging routines, for example TIFF concatenation and image conversion to fax compatible format, are available through efficient and reliable specialized resources.
+
+      Reverse image search features include: search for sample image in the image set, duplicates recognition, search image by associated tags, etc. You can perform these operations without needing to know what's going on under the hood so that you can focus on the core business goals.
+    </Description>
+    <Copyright>Copyright © 2002-2019 Aspose Pty Ltd. All Rights Reserved.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+  </PropertyGroup>  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net2|AnyCPU'">
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-	<DocumentationFile>bin\Debug\{{packageName}}.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-	<DocumentationFile>bin\Release\{{packageName}}.XML</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    {{^netStandard}}
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
     <Reference Include="System.Web" />
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>$(SolutionDir)packages\Newtonsoft.Json.10.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    {{#generatePropertyChanged}}
-    <Reference Include="PropertyChanged">
-      <HintPath>..\..\packages\PropertyChanged.Fody.1.51.3\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
-    </Reference>
-    {{/generatePropertyChanged}}
-    {{/netStandard}}
-    {{#netStandard}}
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="project.json" />
-    {{/netStandard}}
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="**\*.cs"
-             Exclude="obj\**" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
-  {{^netStandard}}
-  <ItemGroup>
-      <None Include="packages.config" />
-      {{#generatePropertyChanged}}
-      <None Include="FodyWeavers.xml" />
-      {{/generatePropertyChanged}}
-  </ItemGroup>
-  <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
-  {{#generatePropertyChanged}}
-  <Import Project="..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.4\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
-  {{/generatePropertyChanged}}
-  {{/netStandard}}
-  {{#netStandard}}
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  {{/netStandard}}
 </Project>
