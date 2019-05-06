@@ -10,3 +10,6 @@
 [submodule "SDKs/PHP"]
 	path = SDKs/PHP
 	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-php
+[submodule "SDKs/Python"]
+	path = SDKs/Python
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-python
