@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestModelExtractor", "RequestModelExtractor\RequestModelExtractor.csproj", "{BD0E8626-3183-41AC-8F71-59B6564EFE8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestModelPythonPackageBuilder", "RequestModelPythonPackageBuilder\RequestModelPythonPackageBuilder.csproj", "{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BD0E8626-3183-41AC-8F71-59B6564EFE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD0E8626-3183-41AC-8F71-59B6564EFE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD0E8626-3183-41AC-8F71-59B6564EFE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
