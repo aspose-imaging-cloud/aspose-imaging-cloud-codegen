@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>RequestModelExtractor</RootNamespace>
     <AssemblyName>RequestModelExtractor</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,6 +40,7 @@
     <Compile Include="Extractors\CSharpRequestModelExtractor.cs" />
     <Compile Include="Extractors\JavaRequestModelExtractor.cs" />
     <Compile Include="Extractors\PhpRequestModelExtractor.cs" />
+    <Compile Include="Extractors\PythonRequestModelExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
