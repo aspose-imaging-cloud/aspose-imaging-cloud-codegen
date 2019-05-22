@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -11,37 +12,43 @@ namespace RequestModelPythonPackageBuilder
             try
             {
                 var modelsDirectory = args[0];
-                var packageName = args[1];
+                var outputFile = args[1];
+                var packageName = args[2];
 
 
                 if (!Directory.Exists(modelsDirectory))
                     throw new ArgumentException("Invalid directory with models: " + modelsDirectory);
 
                 var fileInfos = new DirectoryInfo(modelsDirectory).GetFiles();
-                var imports = new string[fileInfos.Length + 1];
+                var imports = new List<string>(fileInfos.Length + 1);
 
-                for (var i = 0; i < fileInfos.Length; i++)
+                foreach (var fileInfo in fileInfos)
                 {
-                    if (!fileInfos[i].Name.EndsWith("_request.py"))
+                    if (!fileInfo.Name.EndsWith("_request.py"))
                         continue;
 
-                    var pyIndex = fileInfos[i].Name.IndexOf(".py", StringComparison.Ordinal);
-                    var fileName = fileInfos[i].Name
+                    var pyIndex = fileInfo.Name.IndexOf(".py", StringComparison.Ordinal);
+                    var fileName = fileInfo.Name
                         .Substring(0, pyIndex);
                     var className = string.Join(string.Empty,
                         fileName.Split('_').Select(s => s.Substring(0, 1).ToUpperInvariant() + s.Substring(1))
                             .ToArray());
-                    imports[i] = $"from {packageName}.{fileName} import {className}";
+                    
+                    var item = $"from {packageName}.{fileName} import {className}";
+                    if (item.Length > 120)
+                        item = item.Insert(item.LastIndexOf(' ') + 1, $"\\{Environment.NewLine}    ");
+                    
+                    imports.Add(item);
                 }
 
-                imports[fileInfos.Length] = Environment.NewLine;
+                imports.Add(Environment.NewLine);
 
-                File.WriteAllText(modelsDirectory + "__init__.py", string.Join(Environment.NewLine, imports));
+                File.AppendAllText(outputFile, string.Join(Environment.NewLine, imports.ToArray()));
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Invalid parameters. Please, provide two parameters: path to directory with " +
-                                  "models and package name.");
+                Console.WriteLine("Invalid parameters. Please, provide three parameters: path to directory with " +
+                                  "models, path to __init__.py and package name.");
                 throw;
             }
             catch (ArgumentException e)
