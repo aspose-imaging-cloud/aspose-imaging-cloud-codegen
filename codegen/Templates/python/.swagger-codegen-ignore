@@ -1,0 +1,13 @@
+git_push.sh
+README.md
+requirements.txt
+setup.py
+docs
+docs/*
+docs/**
+test
+test/*
+test/**
+test-requirements.txt
+tox.ini
+.travis.yml
