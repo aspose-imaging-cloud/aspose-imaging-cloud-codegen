@@ -6,7 +6,7 @@ namespace RequestModelExtractor.Extractors
     internal class PythonRequestModelExtractor : Base.RequestModelExtractor
     {
         protected override string FileExtension => "py";
-        protected override string CopyrightStart => "# -";
+        protected override string CopyrightStart => "# coding:";
 
         protected override string PreProcessRequestModel(string initialApiText)
         {
