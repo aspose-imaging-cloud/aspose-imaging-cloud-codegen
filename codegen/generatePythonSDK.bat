@@ -11,7 +11,7 @@ Tools\RequestModelPythonPackageBuilder.exe %sdkfolder%\asposeimagingcloud\models
 Tools\RequestModelPythonPackageBuilder.exe %sdkfolder%\asposeimagingcloud\models\requests %sdkfolder%\asposeimagingcloud\models\requests\__init__.py asposeimagingcloud.models.requests || goto :error
 
 cd ..
-exit 1
+exit /b 0
 
 :error
 echo Python SDK generation failed
