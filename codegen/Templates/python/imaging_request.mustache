@@ -33,8 +33,11 @@ class imaging_request(object):
     def to_http_info(self, config):
         """
         Prepares initial info for HTTP request
-        :param config {{packageName}}.configuration Imaging API configuration.
+
+        :param config: Imaging API configuration.
+        :type: asposeimagingcloud.Configuration
         :return: http_request configured http request
+        :rtype: Configuration.models.requests.HttpRequest
         """
         pass
 
@@ -72,9 +75,14 @@ class imaging_request(object):
         else:
             return content_types[0]
 
-    # Helper method to convert first letter to downcase
     @staticmethod
-    def _downcase_first_letter(s):
+    def _lowercase_first_letter(s):
+        """
+        Converts first letter of the string to lowercase
+
+        :param s: initial string
+        :return: initial string with first character in lowercase
+        """
         if len(s) == 0:
             return s
         else:
