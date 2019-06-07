@@ -44,8 +44,8 @@ class {{classname}}(object):
         if api_client is None:
             api_client = ApiClient()
         self.api_client = api_client
-{{#operation}}
 
+{{#operation}}
     def {{operationId}}(self, request):  # noqa: E501
         """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
 
@@ -57,9 +57,7 @@ class {{classname}}(object):
         :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
         """
         http_request = request.to_http_info(self.api_client.configuration)
-        return self.__make_request(http_request,
-                                    '{{httpMethod}}',
-                                    {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
+        return self.__make_request(http_request, '{{httpMethod}}', {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
 
     def {{operationId}}_async(self, request):  # noqa: E501
         """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
@@ -75,7 +73,6 @@ class {{classname}}(object):
         return self.__make_request_async(http_request, '{{httpMethod}}', {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
 
 {{/operation}}
-
     def __make_request(self, http_request, method, return_type):
         def call_api():
             return self.api_client.call_api(
@@ -89,7 +86,6 @@ class {{classname}}(object):
                 files=http_request.files,
                 response_type=return_type,
                 auth_settings=http_request.auth_settings,
-                is_async=http_request.is_async,
                 _return_http_data_only=http_request.return_http_data_only,
                 _preload_content=http_request.preload_content,
                 _request_timeout=http_request.request_timeout,
@@ -114,7 +110,6 @@ class {{classname}}(object):
                 files=http_request.files,
                 response_type=return_type,
                 auth_settings=http_request.auth_settings,
-                is_async=http_request.is_async,
                 _return_http_data_only=http_request.return_http_data_only,
                 _preload_content=http_request.preload_content,
                 _request_timeout=http_request.request_timeout,
