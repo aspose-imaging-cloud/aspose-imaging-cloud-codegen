@@ -1,8 +1,6 @@
-{{#operations}}
-{{#operation}}
 # coding: utf-8
 # -----------------------------------------------------------------------------------
-# <copyright company="Aspose" file="{{operationId}}_request.py">
+# <copyright company="Aspose" file="http_request.py">
 #   Copyright (c) 2019 Aspose Pty Ltd. All rights reserved.
 # </copyright>
 # <summary>
@@ -27,26 +25,20 @@
 # -----------------------------------------------------------------------------------
 
 
-class {{operationId}}_request(object):
-    """
-    Request model for {{nickname}} operation.
-    Initializes a new instance.
-    {{#allParams}}
-    :param {{paramName}} {{#description}}{{{description}}}{{/description}}
-    {{/allParams}}
-    """
-
-{{^hasParams}}
-    def __init__(self):
-        pass
-{{/hasParams}}
-{{#hasParams}}
-    def __init__(self, {{#allParams}}{{paramName}}{{^required}}=None{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}):
-{{#allParams}}
-        self.{{paramName}} = {{paramName}}
-{{#hasMore}}
-{{/hasMore}}
-{{/allParams}}
-{{/hasParams}}
-{{/operation}}
-{{/operations}}
+class http_request(object):
+    def __init__(self, resource_path, path_params, query_params, header_params, form_params, body_params, files,
+                 collection_formats, auth_settings, is_async=None, return_http_data_only=None, preload_content=None,
+                 request_timeout=None):
+        self.resource_path = resource_path
+        self.path_params = path_params
+        self.query_params = query_params
+        self.header_params = header_params
+        self.form_params = form_params
+        self.body_params = body_params
+        self.files = files
+        self.collection_formats = collection_formats
+        self.auth_settings = auth_settings
+        self.is_async = is_async or False
+        self.return_http_data_only = return_http_data_only or True
+        self.preload_content = preload_content or True
+        self.request_timeout = request_timeout or ''
