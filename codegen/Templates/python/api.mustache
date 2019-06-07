@@ -29,7 +29,7 @@ import re  # noqa: F401
 
 # python 2 and python 3 compatibility library
 import six
-from asposeimagingcloud.rest import ApiException
+from {{packageName}}.rest import ApiException
 from {{packageName}}.api_client import ApiClient
 
 
@@ -46,69 +46,85 @@ class {{classname}}(object):
         self.api_client = api_client
 {{#operation}}
 
-    def {{operationId}}(self, request, **kwargs):  # noqa: E501
+    def {{operationId}}(self, request):  # noqa: E501
         """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
 
 {{#notes}}
         {{{notes}}}  # noqa: E501
 {{/notes}}
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass is_async=True
 
-        :param is_async bool
         :param request {{operationId}}_request object with parameters
         :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
-                 If the method is called asynchronously,
-                 returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
+        http_request = request.to_http_info(self.api_client.configuration)
+        return self.__make_request(http_request,
+                                    '{{httpMethod}}',
+                                    {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
+
+    def {{operationId}}_async(self, request):  # noqa: E501
+        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
+
+{{#notes}}
+        {{{notes}}}  # noqa: E501
+{{/notes}}
+
+        :param request {{operationId}}_request object with parameters
+        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
+        """
+        http_request = request.to_http_info(self.api_client.configuration)
+        return self.__make_request_async(http_request, '{{httpMethod}}', {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
+
+{{/operation}}
+
+    def __make_request(self, http_request, method, return_type):
+        def call_api():
+            return self.api_client.call_api(
+                resource_path=http_request.resource_path,
+                method=method,
+                path_params=http_request.path_params,
+                query_params=http_request.query_params,
+                header_params=http_request.header_params,
+                body=http_request.body_params,
+                post_params=http_request.form_params,
+                files=http_request.files,
+                response_type=return_type,
+                auth_settings=http_request.auth_settings,
+                is_async=http_request.is_async,
+                _return_http_data_only=http_request.return_http_data_only,
+                _preload_content=http_request.preload_content,
+                _request_timeout=http_request.request_timeout,
+                collection_formats=http_request.collection_formats)
         try:
-            if kwargs.get('is_async'):
-                return self.{{operationId}}_with_http_info(request, **kwargs)  # noqa: E501
-            (data) = self.{{operationId}}_with_http_info(request, **kwargs)  # noqa: E501
-            return data
+            return call_api()
         except ApiException as e:
             if e.status == 401:
                 self.__request_token()
-                if kwargs.get('is_async'):
-                    return self.{{operationId}}_with_http_info(request, **kwargs)  # noqa: E501
-            (data) = self.{{operationId}}_with_http_info(request, **kwargs)  # noqa: E501
-            return data
+                return call_api()
 
-    def {{operationId}}_with_http_info(self, request, **kwargs):  # noqa: E501
-        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
-
-{{#notes}}
-        {{{notes}}}  # noqa: E501
-{{/notes}}
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass is_async=True
-
-        :param is_async bool
-        :param request {{operationId}}_request object with parameters
-        :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        http_request = request.to_http_info(self.api_client.configuration)
-
-        return self.api_client.call_api(
-            resource_path=http_request.resource_path,
-            method='{{httpMethod}}',
-            path_params=http_request.path_params,
-            query_params=http_request.query_params,
-            header_params=http_request.header_params,
-            body=http_request.body_params,
-            post_params=http_request.form_params,
-            files=http_request.files,
-            response_type={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}},  # noqa: E501
-            auth_settings=http_request.auth_settings,
-            is_async=http_request.is_async,
-            _return_http_data_only=http_request.return_http_data_only,
-            _preload_content=http_request.preload_content,
-            _request_timeout=http_request.request_timeout,
-            collection_formats=http_request.collection_formats)
-{{/operation}}
+    def __make_request_async(self, http_request, method, return_type):
+        def call_api_async():
+            self.api_client.call_api_async(
+                resource_path=http_request.resource_path,
+                method=method,
+                path_params=http_request.path_params,
+                query_params=http_request.query_params,
+                header_params=http_request.header_params,
+                body=http_request.body_params,
+                post_params=http_request.form_params,
+                files=http_request.files,
+                response_type=return_type,
+                auth_settings=http_request.auth_settings,
+                is_async=http_request.is_async,
+                _return_http_data_only=http_request.return_http_data_only,
+                _preload_content=http_request.preload_content,
+                _request_timeout=http_request.request_timeout,
+                collection_formats=http_request.collection_formats)
+        try:
+            return call_api_async()
+        except ApiException as e:
+            if e.status == 401:
+                self.__request_token()
+                return call_api_async()
 
     def __request_token(self):
         config = self.api_client.configuration
