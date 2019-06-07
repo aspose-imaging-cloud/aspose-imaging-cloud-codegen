@@ -90,135 +90,25 @@ class {{classname}}(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-
-        params = locals()
-        params['is_async'] = ''
-        params['_return_http_data_only'] = False
-        params['_preload_content'] = True
-        params['_request_timeout'] = ''
-        for key, val in six.iteritems(params['kwargs']):
-            if key not in params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method {{operationId}}" % key
-                )
-            params[key] = val
-        del params['kwargs']
-{{#allParams}}
-{{#required}}
-        # verify the required parameter '{{paramName}}' is set
-        if request.{{paramName}} is None:
-            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")  # noqa: E501
-{{/required}}
-{{/allParams}}
-
-{{#allParams}}
-{{#hasValidation}}
-    {{#maxLength}}
-        if request.{{paramName}} > {{maxLength}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")  # noqa: E501
-    {{/maxLength}}
-    {{#minLength}}
-        if request.{{paramName}} < {{minLength}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")  # noqa: E501
-    {{/minLength}}
-    {{#maximum}}
-        if request.{{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")  # noqa: E501
-    {{/maximum}}
-    {{#minimum}}
-        if request.{{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")  # noqa: E501
-    {{/minimum}}
-    {{#maxItems}}
-        if request.{{paramName}} > {{maxItems}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")  # noqa: E501
-    {{/maxItems}}
-    {{#minItems}}
-        if request.{{paramName}} < {{minItems}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")  # noqa: E501
-    {{/minItems}}
-{{/hasValidation}}
-{{#-last}}
-{{/-last}}
-{{/allParams}}
-        collection_formats = {}
-        path = '{{{path}}}'
-        path_params = {}
-{{#pathParams}}
-        if request.{{paramName}} is not None:
-            path_params[self.__downcase_first_letter('{{baseName}}')] = request.{{paramName}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self.__downcase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
-{{/pathParams}}
-
-        query_params = []
-{{#queryParams}}
-        if self.__downcase_first_letter('{{baseName}}') in path:
-            path = path.replace('{' + self.__downcase_first_letter('{{baseName}}' + '}'), request.{{paramName}} if request.{{paramName}} is not None else '')
-        else:
-            if request.{{paramName}} is not None:
-                query_params.append((self.__downcase_first_letter('{{baseName}}'), request.{{paramName}})){{#isListContainer}}  # noqa: E501
-                collection_formats[self.__downcase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
-{{/queryParams}}
-
-        header_params = {}
-{{#headerParams}}
-        if request.{{paramName}} is not None:
-            header_params[self.__downcase_first_letter('{{baseName}}')] = request.{{paramName}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self.__downcase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
-{{/headerParams}}
-
-        form_params = []
-        local_var_files = []
-{{#formParams}}
-        if request.{{paramName}} is not None:
-            {{#notFile}}form_params.append((self.__downcase_first_letter('{{baseName}}'), request.{{paramName}})){{/notFile}}{{#isFile}}local_var_files.append((self.__downcase_first_letter('{{baseName}}'), request.{{paramName}})){{/isFile}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self.__downcase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
-{{/formParams}}
-
-        body_params = None
-{{#bodyParam}}
-        if request.{{paramName}} is not None:
-            body_params = request.{{paramName}}
-{{/bodyParam}}
-        {{#hasProduces}}
-        # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])  # noqa: E501
-
-        {{/hasProduces}}
-        {{#hasConsumes}}
-        # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])  # noqa: E501
-
-        {{/hasConsumes}}
-        # Authentication setting
-        auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}] # noqa: E501
+        http_request = request.to_http_info(self.api_client.configuration)
 
         return self.api_client.call_api(
-            path, '{{httpMethod}}',
-            path_params,
-            query_params,
-            header_params,
-            body=body_params,
-            post_params=form_params,
-            files=local_var_files,
+            resource_path=http_request.resource_path,
+            method='{{httpMethod}}',
+            path_params=http_request.path_params,
+            query_params=http_request.query_params,
+            header_params=http_request.header_params,
+            body=http_request.body_params,
+            post_params=http_request.form_params,
+            files=http_request.files,
             response_type={{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}},  # noqa: E501
-            auth_settings=auth_settings,
-            is_async=params.get('is_async'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            auth_settings=http_request.auth_settings,
+            is_async=http_request.is_async,
+            _return_http_data_only=http_request.return_http_data_only,
+            _preload_content=http_request.preload_content,
+            _request_timeout=http_request.request_timeout,
+            collection_formats=http_request.collection_formats)
 {{/operation}}
-
-    # Helper method to convert first letter to downcase
-    def __downcase_first_letter(self, s):
-        if len(s) == 0:
-            return s
-        else:
-            return s[0].lower() + s[1:]
 
     def __request_token(self):
         config = self.api_client.configuration
@@ -244,4 +134,6 @@ class {{classname}}(object):
         self.api_client.configuration.api_version = api_version
 
 {{/operations}}
-{{> requestModel}}
+{{> request_model}}
+{{> imaging_request}}
+{{> http_request}}
