@@ -25,7 +25,7 @@
 # -----------------------------------------------------------------------------
 from __future__ import absolute_import
 
-import re  # noqa: F401
+import re
 
 # python 2 and python 3 compatibility library
 import six
@@ -46,11 +46,11 @@ class {{classname}}(object):
         self.api_client = api_client
 
 {{#operation}}
-    def {{operationId}}(self, request):  # noqa: E501
-        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
+    def {{operationId}}(self, request):
+        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}
 
 {{#notes}}
-        {{{notes}}}  # noqa: E501
+        {{{notes}}}
 {{/notes}}
 
         :param request {{operationId}}_request object with parameters
@@ -59,11 +59,11 @@ class {{classname}}(object):
         http_request = request.to_http_info(self.api_client.configuration)
         return self.__make_request(http_request, '{{httpMethod}}', {{#returnType}}'{{returnType}}'{{/returnType}}{{^returnType}}None{{/returnType}})
 
-    def {{operationId}}_async(self, request):  # noqa: E501
-        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
+    def {{operationId}}_async(self, request):
+        """{{#summary}}{{.}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}
 
 {{#notes}}
-        {{{notes}}}  # noqa: E501
+        {{{notes}}}
 {{/notes}}
 
         :param request {{operationId}}_request object with parameters
