@@ -388,19 +388,19 @@ class ApiClient(object):
                 _request_timeout=None):
         """Makes the HTTP request using RESTClient."""
         if method == "GET":
-            return self.rest_client.GET(url,
+            return self.rest_client.get(url,
                                         query_params=query_params,
                                         _preload_content=_preload_content,
                                         _request_timeout=_request_timeout,
                                         headers=headers)
         elif method == "HEAD":
-            return self.rest_client.HEAD(url,
+            return self.rest_client.head(url,
                                          query_params=query_params,
                                          _preload_content=_preload_content,
                                          _request_timeout=_request_timeout,
                                          headers=headers)
         elif method == "OPTIONS":
-            return self.rest_client.OPTIONS(url,
+            return self.rest_client.options(url,
                                             query_params=query_params,
                                             headers=headers,
                                             post_params=post_params,
@@ -408,7 +408,7 @@ class ApiClient(object):
                                             _request_timeout=_request_timeout,
                                             body=body)
         elif method == "POST":
-            return self.rest_client.POST(url,
+            return self.rest_client.post(url,
                                          query_params=query_params,
                                          headers=headers,
                                          post_params=post_params,
@@ -416,7 +416,7 @@ class ApiClient(object):
                                          _request_timeout=_request_timeout,
                                          body=body)
         elif method == "PUT":
-            return self.rest_client.PUT(url,
+            return self.rest_client.put(url,
                                         query_params=query_params,
                                         headers=headers,
                                         post_params=post_params,
@@ -424,7 +424,7 @@ class ApiClient(object):
                                         _request_timeout=_request_timeout,
                                         body=body)
         elif method == "PATCH":
-            return self.rest_client.PATCH(url,
+            return self.rest_client.patch(url,
                                           query_params=query_params,
                                           headers=headers,
                                           post_params=post_params,
@@ -432,7 +432,7 @@ class ApiClient(object):
                                           _request_timeout=_request_timeout,
                                           body=body)
         elif method == "DELETE":
-            return self.rest_client.DELETE(url,
+            return self.rest_client.delete(url,
                                            query_params=query_params,
                                            headers=headers,
                                            _preload_content=_preload_content,
