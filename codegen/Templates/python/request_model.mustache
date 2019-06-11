@@ -67,7 +67,7 @@ class {{operationId}}_request(ImagingRequest):
 {{#required}}
         # verify the required parameter '{{paramName}}' is set
         if self.{{paramName}} is None:
-            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")  # noqa: E501
+            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")
 {{/required}}
 {{/allParams}}
 
@@ -75,27 +75,27 @@ class {{operationId}}_request(ImagingRequest):
 {{#hasValidation}}
     {{#maxLength}}
         if self.{{paramName}} > {{maxLength}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")
     {{/maxLength}}
     {{#minLength}}
         if self.{{paramName}} < {{minLength}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")
     {{/minLength}}
     {{#maximum}}
-        if self.{{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")  # noqa: E501
+        if self.{{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")
     {{/maximum}}
     {{#minimum}}
-        if self.{{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")  # noqa: E501
+        if self.{{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")
     {{/minimum}}
     {{#maxItems}}
         if self.{{paramName}} > {{maxItems}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")
     {{/maxItems}}
     {{#minItems}}
         if self.{{paramName}} < {{minItems}}:
-            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")
     {{/minItems}}
 {{/hasValidation}}
 {{#-last}}
@@ -106,8 +106,8 @@ class {{operationId}}_request(ImagingRequest):
         path_params = {}
 {{#pathParams}}
         if self.{{paramName}} is not None:
-            path_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
+            path_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
 {{/pathParams}}
 
         query_params = []
@@ -116,23 +116,23 @@ class {{operationId}}_request(ImagingRequest):
             path = path.replace('{' + self._lowercase_first_letter('{{baseName}}' + '}'), self.{{paramName}} if self.{{paramName}} is not None else '')
         else:
             if self.{{paramName}} is not None:
-                query_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{#isListContainer}}  # noqa: E501
-                collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
+                query_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{#isListContainer}}
+                collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
 {{/queryParams}}
 
         header_params = {}
 {{#headerParams}}
         if self.{{paramName}} is not None:
-            header_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
+            header_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
 {{/headerParams}}
 
         form_params = []
         local_var_files = []
 {{#formParams}}
         if self.{{paramName}} is not None:
-            {{#notFile}}form_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/notFile}}{{#isFile}}local_var_files.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/isFile}}{{#isListContainer}}  # noqa: E501
-            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
+            {{#notFile}}form_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/notFile}}{{#isFile}}local_var_files.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/isFile}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
 {{/formParams}}
 
         body_params = None
@@ -144,17 +144,17 @@ class {{operationId}}_request(ImagingRequest):
         {{#hasProduces}}
         # HTTP header `Accept`
         header_params['Accept'] = self._select_header_accept(
-            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])  # noqa: E501
+            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
 
         {{/hasProduces}}
         {{#hasConsumes}}
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self._select_header_content_type(  # noqa: E501
-            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])  # noqa: E501
+        header_params['Content-Type'] = self._select_header_content_type(
+            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
 
         {{/hasConsumes}}
         # Authentication setting
-        auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]  # noqa: E501
+        auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
 
         return HttpRequest(path, path_params, query_params, header_params, form_params, body_params, local_var_files,
                            collection_formats, auth_settings)
