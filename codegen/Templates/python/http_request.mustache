@@ -27,9 +27,10 @@
 
 class http_request(object):
 
-    def __init__(self, resource_path, path_params, query_params, header_params, form_params, body_params, files,
-                 collection_formats, auth_settings, return_http_data_only=None, preload_content=None,
-                 request_timeout=None):
+    def __init__(self, resource_path, path_params, query_params, header_params,
+                 form_params, body_params, files, collection_formats,
+                 auth_settings, return_http_data_only=None,
+                 preload_content=None, request_timeout=None):
         """Makes the HTTP request (synchronous) and returns deserialized data.
 
         To make an async request, set the async parameter.
@@ -37,7 +38,8 @@ class http_request(object):
         :param resource_path: Path to method endpoint.
         :param path_params: Path parameters in the url.
         :param query_params: Query parameters in the url.
-        :param header_params: Header parameters to be placed in the request header.
+        :param header_params: Header parameters to be placed in the request
+            header.
         :param form_params: Request post form parameters,
             for `application/x-www-form-urlencoded`, `multipart/form-data`.
         :param body_params: Request body.
