@@ -49,14 +49,14 @@ class imaging_request(object):
         :return: Accept (e.g. application/json).
         """
         if not accepts:
-            return
+            return None
 
         accepts = [x.lower() for x in accepts]
 
         if 'application/json' in accepts:
             return 'application/json'
-        else:
-            return ', '.join(accepts)
+
+        return ', '.join(accepts)
 
     @staticmethod
     def _select_header_content_type(content_types):
@@ -72,18 +72,18 @@ class imaging_request(object):
 
         if 'application/json' in content_types or '*/*' in content_types:
             return 'application/json'
-        else:
-            return content_types[0]
+
+        return content_types[0]
 
     @staticmethod
-    def _lowercase_first_letter(s):
+    def _lowercase_first_letter(string):
         """
         Converts first letter of the string to lowercase
 
-        :param s: initial string
+        :param string: initial string
         :return: initial string with first character in lowercase
         """
-        if len(s) == 0:
-            return s
-        else:
-            return s[0].lower() + s[1:]
+        if not string:
+            return string
+
+        return string[0].lower() + string[1:]
