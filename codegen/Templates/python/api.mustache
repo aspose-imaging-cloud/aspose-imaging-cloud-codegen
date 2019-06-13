@@ -25,9 +25,6 @@
 # -----------------------------------------------------------------------------
 from __future__ import absolute_import
 
-import re
-
-# python 2 and python 3 compatibility library
 import six
 from {{packageName}}.rest import ApiException
 from {{packageName}}.api_client import ApiClient
@@ -38,8 +35,9 @@ class {{classname}}(object):
     """
     Aspose.Images for Cloud API
 
-    :param api_client: an api client to perfom http requests
+    :param api_client: an api client to perform http requests
     """
+
     def __init__(self, api_client=None):
         if api_client is None:
             api_client = ApiClient()
@@ -90,12 +88,14 @@ class {{classname}}(object):
                 _preload_content=http_request.preload_content,
                 _request_timeout=http_request.request_timeout,
                 collection_formats=http_request.collection_formats)
+
         try:
             return call_api()
-        except ApiException as e:
-            if e.status == 401:
+        except ApiException as ex:
+            if ex.status == 401:
                 self.__request_token()
                 return call_api()
+            raise
 
     def __make_request_async(self, http_request, method, return_type):
         def call_api_async():
@@ -114,12 +114,14 @@ class {{classname}}(object):
                 _preload_content=http_request.preload_content,
                 _request_timeout=http_request.request_timeout,
                 collection_formats=http_request.collection_formats)
+
         try:
             return call_api_async()
-        except ApiException as e:
-            if e.status == 401:
+        except ApiException as ex:
+            if ex.status == 401:
                 self.__request_token()
                 return call_api_async()
+            raise
 
     def __request_token(self):
         config = self.api_client.configuration
