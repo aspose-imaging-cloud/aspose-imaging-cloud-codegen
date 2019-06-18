@@ -23,8 +23,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace RequestModelExtractor.Base
 {
     using System;
