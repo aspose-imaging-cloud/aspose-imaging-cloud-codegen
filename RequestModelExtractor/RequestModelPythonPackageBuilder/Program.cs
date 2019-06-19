@@ -75,8 +75,6 @@ namespace RequestModelPythonPackageBuilder
                             .ToArray());
 
                     var item = $"from {packageName}.{fileName} import {className}";
-                    if (item.Length > 120)
-                        item = item.Insert(item.LastIndexOf(' ') + 1, $"\\{Environment.NewLine}    ");
 
                     imports.Add(item);
                 }
