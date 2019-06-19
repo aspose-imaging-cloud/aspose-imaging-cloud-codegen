@@ -7,6 +7,7 @@ java -jar Tools\swagger-codegen-cli-2.3.1.jar generate -i https://api-qa.aspose.
 call Tools\RequestModelExtractor.exe %sdkfolder%\asposeimagingcloud\api\ %sdkfolder%\asposeimagingcloud\models\requests\ python || goto :error
 call Tools\RequestModelPythonPackageBuilder.exe %sdkfolder%\asposeimagingcloud\models\requests %sdkfolder%\asposeimagingcloud\__init__.py asposeimagingcloud.models.requests || goto :error
 call Tools\RequestModelPythonPackageBuilder.exe %sdkfolder%\asposeimagingcloud\models\requests %sdkfolder%\asposeimagingcloud\models\requests\__init__.py asposeimagingcloud.models.requests || goto :error
+call Tools\CopyrightFixer.exe %sdkfolder%\asposeimagingcloud\models\ __init__.py
 
 cd ..
 exit /b 0
