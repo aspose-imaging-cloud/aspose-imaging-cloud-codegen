@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestModelExtractor", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestModelPythonPackageBuilder", "RequestModelPythonPackageBuilder\RequestModelPythonPackageBuilder.csproj", "{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyrightFixer", "CopyrightFixer\CopyrightFixer.csproj", "{30997F8D-C4F4-4C08-BC72-5F89C0CC4660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38D4849A-3C85-4C8E-823B-6CD3AEF1AF54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30997F8D-C4F4-4C08-BC72-5F89C0CC4660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30997F8D-C4F4-4C08-BC72-5F89C0CC4660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30997F8D-C4F4-4C08-BC72-5F89C0CC4660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30997F8D-C4F4-4C08-BC72-5F89C0CC4660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
