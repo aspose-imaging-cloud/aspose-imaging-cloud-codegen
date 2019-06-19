@@ -2,7 +2,7 @@
 /**
  * --------------------------------------------------------------------------------------------------------------------
  * <copyright company="Aspose" file="ImagingApi.php">
- *   Copyright (c) 2019 Aspose Pty Ltd. All rights reserved.
+ *   Copyright (c) 2018-2019 Aspose Pty Ltd. All rights reserved.
  * </copyright>
  * <summary>
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -318,6 +318,8 @@ class {{classname}}
         }
         
         $options[RequestOptions::TIMEOUT] = 1200;
+        $options[RequestOptions::READ_TIMEOUT] = 1200;
+        $options[RequestOptions::CONNECT_TIMEOUT] = 1200;
         return $options;
     }
     
