@@ -1,3 +1,5 @@
+cd .\codegen
+
 set sdkfolder=..\SDKs\Python
 
 copy /y Templates\python\.swagger-codegen-ignore %sdkfolder%\.swagger-codegen-ignore
