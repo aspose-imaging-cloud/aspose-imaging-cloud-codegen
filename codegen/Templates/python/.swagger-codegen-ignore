@@ -9,3 +9,4 @@ test/*
 test/**
 tox.ini
 .travis.yml
+test-requirements.txt
