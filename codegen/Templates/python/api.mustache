@@ -99,7 +99,7 @@ class {{classname}}(object):
         try:
             return call_api()
         except ApiException as ex:
-            if ex.status == 401:
+            if ex.code == 401:
                 self.__request_token()
                 return call_api()
             raise
@@ -125,7 +125,7 @@ class {{classname}}(object):
         try:
             return call_api_async()
         except ApiException as ex:
-            if ex.status == 401:
+            if ex.code == 401:
                 self.__request_token()
                 return call_api_async()
             raise

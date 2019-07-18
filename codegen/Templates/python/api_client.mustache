@@ -601,8 +601,8 @@ class ApiClient(object):
             return string
         except ValueError:
             raise rest.ApiException(
-                status=0,
-                reason="Failed to parse `{0}` as date object".format(string)
+                message="Failed to parse `{0}` as date object".format(string),
+                code=0
             )
 
     @staticmethod
@@ -621,11 +621,9 @@ class ApiClient(object):
             return string
         except ValueError:
             raise rest.ApiException(
-                status=0,
-                reason=(
-                    "Failed to parse `{0}` as datetime object"
-                    .format(string)
-                )
+                message="Failed to parse `{0}` as datetime object"
+                        .format(string),
+                code=0,
             )
 
     def __deserialize_model(self, data, klass):

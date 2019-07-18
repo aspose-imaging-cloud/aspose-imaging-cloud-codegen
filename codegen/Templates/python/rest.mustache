@@ -219,7 +219,7 @@ class RESTClientObject(object):
                     msg = """Cannot prepare a request message for provided
                              arguments. Please check that your arguments match
                              declared content type."""
-                    raise ApiException(status=0, reason=msg)
+                    raise ApiException(message=msg, code=0)
             # For `GET`, `HEAD`
             else:
                 request_body = ''
@@ -234,7 +234,7 @@ class RESTClientObject(object):
                     headers=headers)
         except urllib3.exceptions.SSLError as ex:
             msg = "{0}\n{1}".format(type(ex).__name__, str(ex))
-            raise ApiException(status=0, reason=msg)
+            raise ApiException(message=msg, code=0)
 
         if _preload_content:
             req = RESTResponse(req)
@@ -243,7 +243,9 @@ class RESTClientObject(object):
             LOGGER.debug("response body: %s", req.data)
 
         if not 200 <= req.status <= 299:
-            raise ApiException(http_resp=req)
+            raise ApiException(
+                '{0} Error connecting to the API {1}; Message: {2}'
+                .format(req.status, url, req.reason), req.status)
 
         return req
 
@@ -314,28 +316,18 @@ class RESTClientObject(object):
 
 
 class ApiException(Exception):
+    """
+    Imaging API Exception
+    """
 
-    def __init__(self, status=None, reason=None, http_resp=None):
-        if http_resp:
-            self.status = http_resp.status
-            self.reason = http_resp.reason
-            self.body = http_resp.data
-            self.headers = http_resp.getheaders()
-        else:
-            self.status = status
-            self.reason = reason
-            self.body = None
-            self.headers = None
-
-    def __str__(self):
-        """Custom error messages for exception"""
-        error_message = "({0})\n"\
-                        "Reason: {1}\n".format(self.status, self.reason)
-        if self.headers:
-            error_message += "HTTP response headers: {0}\n".format(
-                self.headers)
-
-        if self.body:
-            error_message += "HTTP response body: {0}\n".format(self.body)
-
-        return error_message
+    def __init__(self, message, code, error=None):
+        """
+        Initializes a new instance of the ApiException class
+        :param message: Error message
+        :param code: Error code
+        :param error: Error
+        """
+        self.message = message
+        self.code = code
+        if error:
+            self.error = error
