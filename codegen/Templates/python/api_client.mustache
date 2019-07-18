@@ -27,13 +27,7 @@
 from __future__ import absolute_import
 
 import datetime
-import json
-import mimetypes
 from multiprocessing.pool import ThreadPool
-import os
-import re
-import tempfile
-import inspect
 
 # python 2 and python 3 compatibility library
 from six.moves.urllib.parse import quote
@@ -125,14 +119,14 @@ class ApiClient(object):
         if self.cookie:
             header_params['Cookie'] = self.cookie
         if header_params:
-            header_params = self.sanitize_for_serialization(header_params)
-            header_params = dict(self.parameters_to_tuples(header_params,
+            header_params = rest.ObjectHelper.sanitize_for_serialization(header_params)
+            header_params = dict(rest.ObjectHelper.parameters_to_tuples(header_params,
                                                            collection_formats))
 
         # path parameters
         if path_params:
-            path_params = self.sanitize_for_serialization(path_params)
-            path_params = self.parameters_to_tuples(path_params,
+            path_params = rest.ObjectHelper.sanitize_for_serialization(path_params)
+            path_params = rest.ObjectHelper.parameters_to_tuples(path_params,
                                                     collection_formats)
             for k, v in path_params:
                 # specified safe chars, encode everything
@@ -143,15 +137,15 @@ class ApiClient(object):
 
         # query parameters
         if query_params:
-            query_params = self.sanitize_for_serialization(query_params)
-            query_params = self.parameters_to_tuples(query_params,
+            query_params = rest.ObjectHelper.sanitize_for_serialization(query_params)
+            query_params = rest.ObjectHelper.parameters_to_tuples(query_params,
                                                      collection_formats)
 
         # post parameters
         if post_params or files:
-            post_params = self.prepare_post_parameters(post_params, files)
-            post_params = self.sanitize_for_serialization(post_params)
-            post_params = self.parameters_to_tuples(post_params,
+            post_params = rest.ObjectHelper.prepare_post_parameters(post_params, files)
+            post_params = rest.ObjectHelper.sanitize_for_serialization(post_params)
+            post_params = rest.ObjectHelper.parameters_to_tuples(post_params,
                                                     collection_formats)
 
         # auth setting
@@ -159,7 +153,7 @@ class ApiClient(object):
 
         # body
         if body:
-            body = self.sanitize_for_serialization(body)
+            body = rest.ObjectHelper.sanitize_for_serialization(body)
 
         # request url
         url = ''
@@ -185,7 +179,10 @@ class ApiClient(object):
         if _preload_content:
             # deserialize response data
             if response_type:
-                return_data = self.deserialize(response_data, response_type)
+                return_data = rest.ObjectHelper.deserialize(response_data,
+                                                            response_type,
+                                                            self.configuration
+                                                            .temp_folder_path)
             else:
                 return_data = None
 
@@ -214,10 +211,10 @@ class ApiClient(object):
         elif isinstance(obj, self.PRIMITIVE_TYPES):
             return obj
         elif isinstance(obj, list):
-            return [self.sanitize_for_serialization(sub_obj)
+            return [rest.ObjectHelper.sanitize_for_serialization(sub_obj)
                     for sub_obj in obj]
         elif isinstance(obj, tuple):
-            return tuple(self.sanitize_for_serialization(sub_obj)
+            return tuple(rest.ObjectHelper.sanitize_for_serialization(sub_obj)
                          for sub_obj in obj)
         elif isinstance(obj, (datetime.datetime, datetime.date)):
             return obj.isoformat()
@@ -234,7 +231,7 @@ class ApiClient(object):
                         for attr, _ in six.iteritems(obj.swagger_types)
                         if getattr(obj, attr) is not None}
 
-        return {key: self.sanitize_for_serialization(val)
+        return {key: rest.ObjectHelper.sanitize_for_serialization(val)
                 for key, val in six.iteritems(obj_dict)}
 
     def deserialize(self, response, response_type):
