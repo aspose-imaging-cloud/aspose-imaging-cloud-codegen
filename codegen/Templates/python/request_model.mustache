@@ -1,0 +1,162 @@
+{{#operations}}
+{{#operation}}
+#  coding: utf-8
+#  ----------------------------------------------------------------------------
+#  <copyright company="Aspose" file="{{operationId}}_request.py">
+#    Copyright (c) 2018-2019 Aspose Pty Ltd. All rights reserved.
+#  </copyright>
+#  <summary>
+#    Permission is hereby granted, free of charge, to any person obtaining a
+#   copy  of this software and associated documentation files (the "Software"),
+#   to deal  in the Software without restriction, including without limitation
+#   the rights  to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell  copies of the Software, and to permit persons to whom the
+#   Software is  furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all  copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM,  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#  </summary>
+#  ----------------------------------------------------------------------------
+
+from {{packageName}}.models.requests.imaging_request import ImagingRequest
+from {{packageName}}.models.requests.http_request import HttpRequest
+
+
+class {{operationId}}_request(ImagingRequest):
+    """
+    Request model for {{nickname}} operation.
+    Initializes a new instance.
+
+    {{#allParams}}
+    :param {{paramName}} {{#description}}{{{description}}}{{/description}}
+    {{/allParams}}
+    """
+
+{{^hasParams}}
+    def {{operationId}}_request
+        ImagingRequest.__init__(self)
+{{/hasParams}}
+{{#hasParams}}
+    def __init__(self, {{#allParams}}{{paramName}}{{^required}}=None{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}}):
+        ImagingRequest.__init__(self)
+{{#allParams}}
+        self.{{paramName}} = {{paramName}}
+{{#hasMore}}
+{{/hasMore}}
+{{/allParams}}
+{{/hasParams}}
+
+    def to_http_info(self, config):
+        """
+        Prepares initial info for HTTP request
+
+        :param config: Imaging API configuration
+        :type: asposeimagingcloud.Configuration
+        :return: http_request configured http request
+        :rtype: Configuration.models.requests.HttpRequest
+        """
+{{#allParams}}
+{{#required}}
+        # verify the required parameter '{{paramName}}' is set
+        if self.{{paramName}} is None:
+            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")
+{{/required}}
+{{/allParams}}
+
+{{#allParams}}
+{{#hasValidation}}
+    {{#maxLength}}
+        if self.{{paramName}} > {{maxLength}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")
+    {{/maxLength}}
+    {{#minLength}}
+        if self.{{paramName}} < {{minLength}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")
+    {{/minLength}}
+    {{#maximum}}
+        if self.{{paramName}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")
+    {{/maximum}}
+    {{#minimum}}
+        if self.{{paramName}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")
+    {{/minimum}}
+    {{#maxItems}}
+        if self.{{paramName}} > {{maxItems}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")
+    {{/maxItems}}
+    {{#minItems}}
+        if self.{{paramName}} < {{minItems}}:
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")
+    {{/minItems}}
+{{/hasValidation}}
+{{#-last}}
+{{/-last}}
+{{/allParams}}
+        collection_formats = {}
+        path = '{{{path}}}'
+        path_params = {}
+{{#pathParams}}
+        if self.{{paramName}} is not None:
+            path_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
+{{/pathParams}}
+
+        query_params = []
+{{#queryParams}}
+        if self._lowercase_first_letter('{{baseName}}') in path:
+            path = path.replace('{' + self._lowercase_first_letter('{{baseName}}' + '}'), self.{{paramName}} if self.{{paramName}} is not None else '')
+        else:
+            if self.{{paramName}} is not None:
+                query_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{#isListContainer}}
+                collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
+{{/queryParams}}
+
+        header_params = {}
+{{#headerParams}}
+        if self.{{paramName}} is not None:
+            header_params[self._lowercase_first_letter('{{baseName}}')] = self.{{paramName}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
+{{/headerParams}}
+
+        form_params = []
+        local_var_files = []
+{{#formParams}}
+        if self.{{paramName}} is not None:
+            {{#notFile}}form_params.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/notFile}}{{#isFile}}local_var_files.append((self._lowercase_first_letter('{{baseName}}'), self.{{paramName}})){{/isFile}}{{#isListContainer}}
+            collection_formats[self._lowercase_first_letter('{{baseName}}')] = '{{collectionFormat}}'{{/isListContainer}}
+{{/formParams}}
+
+        body_params = None
+{{#bodyParam}}
+        if self.{{paramName}} is not None:
+            body_params = self.{{paramName}}
+{{/bodyParam}}
+
+        {{#hasProduces}}
+        # HTTP header `Accept`
+        header_params['Accept'] = self._select_header_accept(
+            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
+
+        {{/hasProduces}}
+        {{#hasConsumes}}
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self._select_header_content_type(
+            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
+
+        {{/hasConsumes}}
+        # Authentication setting
+        auth_settings = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
+
+        return HttpRequest(path, path_params, query_params, header_params, form_params, body_params, local_var_files,
+                           collection_formats, auth_settings)
+{{/operation}}
+{{/operations}}

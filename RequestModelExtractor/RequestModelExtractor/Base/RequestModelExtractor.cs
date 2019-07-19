@@ -72,6 +72,8 @@ namespace RequestModelExtractor.Base
                     return new JavaRequestModelExtractor();
                 case "php":
                     return new PhpRequestModelExtractor();
+               case "python":
+                   return new PythonRequestModelExtractor();
             }
 
             throw new NotSupportedException($"Language {language} is not supported");
@@ -109,7 +111,7 @@ namespace RequestModelExtractor.Base
                     for (int index = copyrightMatchCollection.Count - 1; index > 0; index--)
                     {
                         newFileName = $"{copyrightMatchCollection[index].Groups[1]}.{FileExtension}";
-                        newFileName = char.ToUpper(newFileName[0]) + newFileName.Substring(1, newFileName.Length - 1);
+                        newFileName = ProcessFileName(newFileName);
                         matchTextIndex = copyrightMatchCollection[index].Index;
                         for (int x = copyrightStartCollection.Count - 1; x > 0; x--)
                         {
@@ -143,6 +145,11 @@ namespace RequestModelExtractor.Base
         protected virtual string PreProcessRequestModel(string initialApiText)
         {
             return initialApiText;
+        }
+
+        protected virtual string ProcessFileName(string fileName)
+        {
+            return char.ToUpper(fileName[0]) + fileName.Substring(1, fileName.Length - 1);
         }
 
         #endregion
