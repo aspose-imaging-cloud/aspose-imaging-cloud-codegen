@@ -30,6 +30,6 @@ Your feedback is very important to us. Please feel free to contact via
 
 # Resources
 + [**Website**](https://www.aspose.cloud)
-+ [**Product Home**](https://products.aspose.cloud/imaging/cloud)
++ [**Product Home**](https://products.aspose.cloud/imaging)
 + [**Documentation**](https://docs.aspose.cloud/display/imagingcloud/Home)
 + [**Blog**](https://blog.aspose.cloud/category/aspose-products/aspose-imaging-product-family/)
