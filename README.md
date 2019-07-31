@@ -16,6 +16,7 @@ Directory | Description
 [Android SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-android) | Android instructions for Java SDK
 [Node.js SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-node) | SDK for Node.js 6.x and higher
 [PHP SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-php) | SDK for PHP 5.6 and higher
+[Python SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-python) | SDK for Python 2.7 and higher
 
 To use these SDKs, you will need App SID and App Key which can be looked up at [Aspose Cloud Dashboard](https://dashboard.aspose.cloud/#/apps) (free registration in Aspose Cloud is required for this).
 
@@ -29,6 +30,6 @@ Your feedback is very important to us. Please feel free to contact via
 
 # Resources
 + [**Website**](https://www.aspose.cloud)
-+ [**Product Home**](https://products.aspose.cloud/imaging/cloud)
++ [**Product Home**](https://products.aspose.cloud/imaging)
 + [**Documentation**](https://docs.aspose.cloud/display/imagingcloud/Home)
 + [**Blog**](https://blog.aspose.cloud/category/aspose-products/aspose-imaging-product-family/)
