@@ -1,7 +1,7 @@
 SwaggerClient-php/.gitignore
-SwaggerClient-php/docs/**/*.md
+#SwaggerClient-php/docs/**/*.md
 SwaggerClient-php/test/**/*.php
-SwaggerClient-php/README.md
+#SwaggerClient-php/README.md
 SwaggerClient-php/git_push.sh
 SwaggerClient-php/.travis.yml
 SwaggerClient-php/.php_cs

@@ -1,0 +1,48 @@
+# {{invokerPackage}}\{{classname}}{{#description}}
+{{description}}{{/description}}
+
+{{#operations}}
+{{#operation}}
+<a name="{{{operationIdLowerCase}}}"></a>
+# **{{{operationId}}}**
+> {{{operationId}}}(${{{operationId}}}Request)
+
+{{{summary}}}{{#notes}}
+
+{{{notes}}}{{/notes}}
+
+### Return type
+
+{{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}**\Psr\Http\Message\StreamInterface**{{/x-binary-result}}{{^x-binary-result}}{{#returnTypeIsPrimitive}}**{{{returnType}}}**{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[**{{{returnType}}}**]({{returnBaseType}}.md){{/returnTypeIsPrimitive}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}void (empty response body){{/returnType}}
+
+<a name="{{{operationIdLowerCase}}}async"></a>
+# **{{{operationId}}}Async**
+> {{{operationId}}}Async(${{{operationId}}}Request)
+
+{{{summary}}}
+
+Performs operation asynchronously.{{#notes}}
+
+{{{notes}}}{{/notes}}
+
+### Return type
+
+**\GuzzleHttp\Promise\PromiseInterface**
+
+### **{{vendorExtensions.x-operationId}}Request** Parameters
+```php
+__construct({{#allParams}}
+    ${{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+```
+{{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------{{/-last}}{{/allParams}}
+{{#allParams}} **{{paramName}}** | {{#isFile}}**string**{{/isFile}}{{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}{{^isFile}}[**{{dataType}}**]({{baseType}}.md){{/isFile}}{{/isPrimitiveType}}| {{description}} |{{^required}} [optional]{{/required}}{{#defaultValue}} [default to {{defaultValue}}]{{/defaultValue}}
+{{/allParams}}
+
+[[Back to top]](#) [[Back to API list]](API_README.md#documentation-for-api-endpoints) [[Back to Model list]](API_README.md#documentation-for-models) [[Back to API_README]](API_README.md)
+
+{{/operation}}
+{{/operations}}
+
+

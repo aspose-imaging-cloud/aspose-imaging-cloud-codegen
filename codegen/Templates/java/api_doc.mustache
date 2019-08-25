@@ -1,0 +1,32 @@
+# {{apiPackage}}.{{classname}}{{#description}}
+{{description}}{{/description}}
+
+{{#operations}}
+{{#operation}}
+<a name="{{operationId}}"></a>
+## **{{operationId}}**
+> {{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}byte[]{{/x-binary-result}}{{^x-binary-result}}{{#returnTypeIsPrimitive}}{{returnType}}{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[{{returnType}}]({{returnBaseType}}.md){{/returnTypeIsPrimitive}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{vendorExtensions.x-operationId}}Request request)
+
+{{summary}}{{#notes}}
+
+{{notes}}{{/notes}}
+
+### **{{vendorExtensions.x-operationId}}Request** Parameters
+```java
+{{vendorExtensions.x-operationId}}Request({{#allParams}}
+    {{#isFile}}byte[]{{/isFile}}{{^isFile}}{{{dataType}}}{{/isFile}} {{{paramName}}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+```
+{{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------{{/-last}}{{/allParams}}
+{{#allParams}} **{{paramName}}** | {{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isFile}}**byte[]**{{/isFile}}{{^isFile}}[**{{dataType}}**]({{baseType}}.md){{/isFile}}{{/isPrimitiveType}}| {{description}} |{{^required}} [optional]{{/required}}{{#defaultValue}} [default to {{defaultValue}}]{{/defaultValue}}{{#allowableValues}} [enum: {{#values}}{{{.}}}{{^-last}}, {{/-last}}{{/values}}]{{/allowableValues}}
+{{/allParams}}
+
+### Return type
+
+{{#returnType}}{{#vendorExtensions}}{{#x-binary-result}}**byte[]**{{/x-binary-result}}{{^x-binary-result}}{{#returnTypeIsPrimitive}}**{{returnType}}**{{/returnTypeIsPrimitive}}{{^returnTypeIsPrimitive}}[**{{returnType}}**]({{returnBaseType}}.md){{/returnTypeIsPrimitive}}{{/x-binary-result}}{{/vendorExtensions}}{{/returnType}}{{^returnType}}void (empty response body){{/returnType}}
+
+[[Back to top]](#) [[Back to API list]](API_README.md#documentation-for-api-endpoints) [[Back to Model list]](API_README.md#documentation-for-models) [[Back to API_README]](API_README.md)
+
+{{/operation}}
+{{/operations}}
