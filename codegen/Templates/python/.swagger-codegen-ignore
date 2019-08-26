@@ -1,9 +1,9 @@
 git_push.sh
-README.md
+#README.md
 setup.py
-docs
-docs/*
-docs/**
+#docs
+#docs/*
+#docs/**
 test
 test/*
 test/**
