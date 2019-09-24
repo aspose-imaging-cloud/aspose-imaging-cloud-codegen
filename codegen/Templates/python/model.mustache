@@ -75,12 +75,11 @@ class {{classname}}({{#parent}}{{parent}}{{/parent}}{{^parent}}object{{/parent}}
 
     def __init__(self{{#vars}}, {{name}}={{#defaultValue}}{{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}None{{/defaultValue}}{{/vars}}):
         """{{classname}} - a model defined in Swagger"""
+        super({{classname}}, self).__init__()
 {{#vars}}{{#-first}}
 {{/-first}}
         self._{{name}} = None
-{{/vars}}
-        self.discriminator = {{#discriminator}}'{{discriminator}}'{{/discriminator}}{{^discriminator}}None{{/discriminator}}
-{{#vars}}{{#-first}}
+{{/vars}}{{#vars}}{{#-first}}
 {{/-first}}
         if {{name}} is not None:
             self.{{name}} = {{name}}

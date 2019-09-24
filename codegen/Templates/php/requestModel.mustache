@@ -216,6 +216,11 @@ class {{vendorExtensions.x-operationId}}Request extends ImagingRequest
             }
         }
         {{/bodyParams}}
+
+        $headers = $this->selectHeaders(
+            [{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}],
+            [{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}]
+        );
         
         $httpInfo = array(
             "resourcePath" => $resourcePath,

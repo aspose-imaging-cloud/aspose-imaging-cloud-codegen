@@ -8,6 +8,7 @@ import {{invokerPackage}}.internal.requesthandlers.*;
 import {{modelPackage}}.requests.*;
 import com.aspose.imaging.cloud.sdk.stablemodel.*;
 
+import java.io.File;
 {{^fullJavaUtil}}
 import java.util.HashMap;
 {{/fullJavaUtil}}
@@ -182,15 +183,8 @@ public class {{classname}}
       {
           headerParams.Add("{{paramName}}", this.apiInvoker.toPathValue(request.{{baseName}})); // header parameter
       }{{/headerParams}}
-      {{#hasBodyParam}}String postBody = null;
-      if (request.{{bodyParam.baseName}} instanceof String)
-      {
-        postBody = request.{{bodyParam.baseName}}
-      }
-      else
-      {
-        postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}})
-      }{{/hasBodyParam}}
+      {{#hasBodyParam}}String postBody = SerializationHelper.serialize(request.{{bodyParam.baseName}});
+      {{/hasBodyParam}}
       {{#formParams}}if (request.{{baseName}} != null) 
       {
           {{#isFile}}formParams.put("{{paramName}}", this.apiInvoker.toFileInfo(request.{{baseName}}, "{{baseName}}"));{{/isFile}}{{^isFile}}formParams.put("{{baseName}}", request.{{baseName}});{{/isFile}}
