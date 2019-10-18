@@ -150,27 +150,6 @@ module {{moduleName}}
     {{/required}}
   {{/queryParams}}
 
-      # header parameters
-      header_params = {}
-  {{#hasProduces}}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = select_header_accept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
-  {{/hasProduces}}
-  {{#hasConsumes}}
-      # HTTP header 'Content-Type'
-      header_params['Content-Type'] = select_header_content_type([{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
-  {{/hasConsumes}}
-  {{#headerParams}}
-    {{#required}}
-      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}}
-    {{/required}}
-  {{/headerParams}}
-  {{#headerParams}}
-    {{^required}}
-      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}} unless @{{{paramName}}}.nil?
-    {{/required}}
-  {{/headerParams}}
-
       # form parameters
       form_params = {}
   {{#formParams}}
@@ -192,6 +171,27 @@ module {{moduleName}}
       post_body = @api_client.object_to_http_body({{#required}}@{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}})
   {{/bodyParam}}
       auth_names = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
+
+      # header parameters
+      header_params = {}
+  {{#hasProduces}}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = select_header_accept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
+  {{/hasProduces}}
+  {{#hasConsumes}}
+      # HTTP header 'Content-Type'
+      header_params['Content-Type'] = form_params.any? ? 'multipart/form-data' : select_header_content_type([{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
+  {{/hasConsumes}}
+  {{#headerParams}}
+    {{#required}}
+      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}}
+    {{/required}}
+  {{/headerParams}}
+  {{#headerParams}}
+    {{^required}}
+      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}} unless @{{{paramName}}}.nil?
+    {{/required}}
+  {{/headerParams}}
 
       AsposeImagingCloud::HttpRequest.new(local_var_path,
                                       header_params,
