@@ -29,11 +29,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RequestModelPythonPackageBuilder")]
+[assembly: AssemblyTitle("RequestModelPackageBuilder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aspose")]
-[assembly: AssemblyProduct("RequestModelPythonPackageBuilder")]
+[assembly: AssemblyProduct("RequestModelPackageBuilder")]
 [assembly: AssemblyCopyright("2019 © Aspose Pty Ltd.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
