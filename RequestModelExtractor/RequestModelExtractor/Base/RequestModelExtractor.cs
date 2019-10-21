@@ -33,7 +33,7 @@ namespace RequestModelExtractor.Base
     /// <summary>
     /// Extracts the request model from API.
     /// </summary>
-    internal abstract class RequestModelExtractor
+    public abstract class RequestModelExtractor
     {
         #region Properties
 
@@ -74,6 +74,8 @@ namespace RequestModelExtractor.Base
                     return new PhpRequestModelExtractor();
                case "python":
                    return new PythonRequestModelExtractor();
+               case "ruby":
+                   return new RubyRequestModelExtractor();
             }
 
             throw new NotSupportedException($"Language {language} is not supported");

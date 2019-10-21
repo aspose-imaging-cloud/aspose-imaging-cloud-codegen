@@ -1,0 +1,13 @@
+test
+test/*
+test/**
+Gemfile
+git_push.sh
+Rakefile
+.rspec
+.rubocop.yml
+spec
+spec/*
+spec/**
+*.gemspec
+.gitignore
