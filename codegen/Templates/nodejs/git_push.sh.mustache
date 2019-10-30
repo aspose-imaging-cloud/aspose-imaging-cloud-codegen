@@ -53,6 +53,11 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{
      * {{{description}}}
      */
 {{/description}}
+{{^description}}
+    /**
+     * {{name}}
+     */
+{{/description}}
     public {{name}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}};
     
 {{/vars}}
