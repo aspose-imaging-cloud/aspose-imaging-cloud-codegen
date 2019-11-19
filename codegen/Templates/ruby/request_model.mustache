@@ -168,7 +168,7 @@ module {{moduleName}}
       post_body = nil
   {{/bodyParam}}
   {{#bodyParam}}
-      post_body = @api_client.object_to_http_body({{#required}}@{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}})
+      post_body = object_to_http_body({{#required}}@{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}})
   {{/bodyParam}}
       auth_names = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
 
