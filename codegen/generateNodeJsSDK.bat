@@ -10,6 +10,10 @@ if NOT EXIST %sdkfolder%\lib mkdir %sdkfolder%\lib || goto :error
 move /y %sdkfolder%\api.ts %sdkfolder%\lib\api.ts || goto :error
 move /y %sdkfolder%\git_push.sh %sdkfolder%\lib\model\model.ts || goto :error
 
+cd Tools
+powershell -NoProfile -ExecutionPolicy Bypass -Command ". '.\nodejs.ps1' '$sdkfolder\'" || goto :error
+cd ..
+
 cd ..
 echo OK
 exit /b 0
