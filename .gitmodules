@@ -13,3 +13,6 @@
 [submodule "SDKs/Python"]
 	path = SDKs/Python
 	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-python
+[submodule "SDKs/Ruby"]
+	path = SDKs/Ruby
+	url = https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-ruby

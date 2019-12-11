@@ -41,6 +41,7 @@
     <Compile Include="Extractors\JavaRequestModelExtractor.cs" />
     <Compile Include="Extractors\PhpRequestModelExtractor.cs" />
     <Compile Include="Extractors\PythonRequestModelExtractor.cs" />
+    <Compile Include="Extractors\RubyRequestModelExtractor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -63,7 +63,7 @@ namespace CopyrightFixer
 
                     var content = File.ReadAllText(fileInfo.FullName);
 
-                    var modifiedContent = Regex.Replace(content, "(file=\")(.*.py)(\">)", m =>
+                    var modifiedContent = Regex.Replace(content, $"(file=\")(.*.{fileInfo.Extension})(\">)", m =>
                         m.Groups[1].Value +
                         fileInfo.Name +
                         m.Groups[3].Value

@@ -1,0 +1,206 @@
+{{#operations}}
+{{#operation}}
+#  ----------------------------------------------------------------------------
+#  <copyright company="Aspose" file="{{operationId}}_request.rb">
+#    Copyright (c) 2018-2019 Aspose Pty Ltd. All rights reserved.
+#  </copyright>
+#  <summary>
+#    Permission is hereby granted, free of charge, to any person obtaining a
+#   copy  of this software and associated documentation files (the "Software"),
+#   to deal  in the Software without restriction, including without limitation
+#   the rights  to use, copy, modify, merge, publish, distribute, sublicense,
+#   and/or sell  copies of the Software, and to permit persons to whom the
+#   Software is  furnished to do so, subject to the following conditions:
+#
+#   The above copyright notice and this permission notice shall be included in
+#   all  copies or substantial portions of the Software.
+#
+#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+#   FROM,  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#   DEALINGS IN THE SOFTWARE.
+#  </summary>
+#  ----------------------------------------------------------------------------
+
+
+require_relative './imaging_request'
+require_relative './http_request'
+
+module {{moduleName}}
+  # Request model for {{nickname}} operation.
+  class {{operationId}}_request < ImagingRequest
+
+{{#summary}}
+    # {{summary}}
+{{/summary}}
+{{#notes}}
+    # {{notes}}
+{{/notes}}
+{{#allParams}}
+    # @param [{{{dataType}}}] {{paramName}} {{description}}
+{{/allParams}}
+    {{^hasParams}}
+    def initialize()
+    {{/hasParams}}
+    {{#hasParams}}
+    def initialize({{#allParams}}{{paramName}}{{^required}} = nil{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+    {{#allParams}}
+      @{{paramName}} = {{paramName}}
+        {{#hasMore}}
+        {{/hasMore}}
+    {{/allParams}}
+    {{/hasParams}}
+    end
+
+    def to_http_info(config)
+  {{#allParams}}
+    {{#required}}
+      # verify the required parameter '{{paramName}}' is set
+      if config.client_side_validation && @{{{paramName}}}.nil?
+        raise ArgumentError, "Missing the required parameter '{{paramName}}' when calling {{classname}}.{{operationId}}"
+      end
+
+      {{#isEnum}}
+        {{^isContainer}}
+      # verify enum value
+      if config.client_side_validation && ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(@{{{paramName}}})
+        raise ArgumentError, "invalid value for '{{{paramName}}}', must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}"
+      end
+
+        {{/isContainer}}
+      {{/isEnum}}
+    {{/required}}
+    {{^required}}
+      {{#isEnum}}
+        {{#collectionFormat}}
+      if config.client_side_validation && @{{{paramName}}} && !@{{{paramName}}}.all? { |item| [{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(item) }
+        fail ArgumentError, 'invalid value for "{{{paramName}}}", must include one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}'
+      end
+
+        {{/collectionFormat}}
+        {{^collectionFormat}}
+      if config.client_side_validation && @{{{paramName}}} && ![{{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}].include?(@{{{paramName}}})
+        fail ArgumentError, 'invalid value for "{{{paramName}}}", must be one of {{#allowableValues}}{{#values}}{{{this}}}{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}'
+      end
+
+        {{/collectionFormat}}
+      {{/isEnum}}
+    {{/required}}
+     {{#hasValidation}}
+      {{#maxLength}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}}.to_s.length > {{{maxLength}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be smaller than or equal to {{{maxLength}}}.'
+      end
+
+      {{/maxLength}}
+      {{#minLength}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}}.to_s.length < {{{minLength}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, the character length must be great than or equal to {{{minLength}}}.'
+      end
+
+      {{/minLength}}
+      {{#maximum}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}} >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{{maximum}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be smaller than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{{maximum}}}.'
+      end
+
+      {{/maximum}}
+      {{#minimum}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}} <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{{minimum}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{{minimum}}}.'
+      end
+
+      {{/minimum}}
+      {{#pattern}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}} !~ Regexp.new({{{pattern}}})
+        fail ArgumentError, "invalid value for '{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:\"{{{paramName}}}\"]{{/required}}' when calling {{classname}}.{{operationId}}, must conform to the pattern {{{pattern}}}."
+      end
+
+      {{/pattern}}
+      {{#maxItems}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}}.length > {{{maxItems}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be less than or equal to {{{maxItems}}}.'
+      end
+
+      {{/maxItems}}
+      {{#minItems}}
+      if config.client_side_validation && {{^required}}!@{{{paramName}}}.nil? && {{/required}}{{#required}}{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}}.length < {{{minItems}}}
+        fail ArgumentError, 'invalid value for "{{#required}}{{{paramName}}}{{/required}}{{^required}}opts[:"{{{paramName}}}"]{{/required}}" when calling {{classname}}.{{operationId}}, number of items must be greater than or equal to {{{minItems}}}.'
+      end
+
+      {{/minItems}}
+    {{/hasValidation}}
+  {{/allParams}}
+      # resource path
+      local_var_path = '{{{path}}}'{{#pathParams}}.sub('{' + '{{baseName}}' + '}', @{{paramName}}.to_s){{/pathParams}}
+
+      # query parameters
+      query_params = {}
+  {{#queryParams}}
+    {{#required}}
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param({{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}}
+    {{/required}}
+  {{/queryParams}}
+  {{#queryParams}}
+    {{^required}}
+      query_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}} unless @{{{paramName}}}.nil?
+    {{/required}}
+  {{/queryParams}}
+
+      # form parameters
+      form_params = {}
+  {{#formParams}}
+    {{#required}}
+      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}}
+    {{/required}}
+  {{/formParams}}
+  {{#formParams}}
+    {{^required}}
+      form_params['{{baseName}}'] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}} unless @{{{paramName}}}.nil?
+    {{/required}}
+  {{/formParams}}
+
+      # http body (model)
+  {{^bodyParam}}
+      post_body = nil
+  {{/bodyParam}}
+  {{#bodyParam}}
+      post_body = object_to_http_body({{#required}}@{{{paramName}}}{{/required}}{{^required}}@{{{paramName}}}{{/required}})
+  {{/bodyParam}}
+      auth_names = [{{#authMethods}}'{{name}}'{{#hasMore}}, {{/hasMore}}{{/authMethods}}]
+
+      # header parameters
+      header_params = {}
+  {{#hasProduces}}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = select_header_accept([{{#produces}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/produces}}])
+  {{/hasProduces}}
+  {{#hasConsumes}}
+      # HTTP header 'Content-Type'
+      header_params['Content-Type'] = form_params.any? ? 'multipart/form-data' : select_header_content_type([{{#consumes}}'{{{mediaType}}}'{{#hasMore}}, {{/hasMore}}{{/consumes}}])
+  {{/hasConsumes}}
+  {{#headerParams}}
+    {{#required}}
+      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}}
+    {{/required}}
+  {{/headerParams}}
+  {{#headerParams}}
+    {{^required}}
+      header_params[:{{{baseName}}}] = {{#collectionFormat}}@api_client.build_collection_param(@{{{paramName}}}, :{{{collectionFormat}}}){{/collectionFormat}}{{^collectionFormat}}@{{{paramName}}}{{/collectionFormat}} unless @{{{paramName}}}.nil?
+    {{/required}}
+  {{/headerParams}}
+
+      AsposeImagingCloud::HttpRequest.new(local_var_path,
+                                      header_params,
+                                      query_params,
+                                      form_params,
+                                      post_body,
+                                      auth_names)
+    end
+  end
+end
+    {{/operation}}
+{{/operations}}
