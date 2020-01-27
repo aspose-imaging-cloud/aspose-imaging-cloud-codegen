@@ -130,7 +130,7 @@ module AsposeImagingCloud
       conn = Faraday.new url, { :params => query_params, :headers => header_params } do |f|
         f.request :multipart
         f.request :url_encoded
-        f.adapter Faraday.default_adapter
+        f.adapter :net_http_persistent, pool_size: 5
       end
 
       case http_method
