@@ -11,7 +11,7 @@ move /y %sdkfolder%\api.ts %sdkfolder%\lib\api.ts || goto :error
 move /y %sdkfolder%\git_push.sh %sdkfolder%\lib\model\model.ts || goto :error
 
 cd Tools
-powershell -NoProfile -ExecutionPolicy Bypass -Command ". '.\nodejs.ps1' '$sdkfolder\'" || goto :error
+powershell -NoProfile -ExecutionPolicy Bypass -Command ". '.\nodejs.ps1' '%sdkfolder%\'" || goto :error
 cd ..
 
 cd ..
