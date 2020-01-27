@@ -17,6 +17,7 @@ Directory | Description
 [Node.js SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-node) | SDK for Node.js 6.x and higher
 [PHP SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-php) | SDK for PHP 5.6 and higher
 [Python SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-python) | SDK for Python 2.7 and higher
+[Ruby SDK](https://github.com/aspose-imaging-cloud/aspose-imaging-cloud-ruby) | SDK for Ruby 2.5.1 and higher
 
 To use these SDKs, you will need App SID and App Key which can be looked up at [Aspose Cloud Dashboard](https://dashboard.aspose.cloud/#/apps) (free registration in Aspose Cloud is required for this).
 
