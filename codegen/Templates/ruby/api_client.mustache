@@ -54,7 +54,7 @@ module AsposeImagingCloud
       @config = Configuration.new(app_key, app_sid, base_url, api_version, debug)
       @default_headers = {
         'x-aspose-client' => 'ruby sdk',
-        'x-aspose-version' => '19.12'
+        'x-aspose-version' => '20.1'
       }
     end
 
@@ -130,7 +130,7 @@ module AsposeImagingCloud
       conn = Faraday.new url, { :params => query_params, :headers => header_params } do |f|
         f.request :multipart
         f.request :url_encoded
-        f.adapter Faraday.default_adapter
+        f.adapter :net_http_persistent, pool_size: 5
       end
 
       case http_method
