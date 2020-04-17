@@ -3,6 +3,7 @@ call codegen\generateJavaSDK ||  goto :error
 call codegen\generateNodeJsSDK ||  goto :error
 call codegen\generatePhpSDK ||  goto :error
 call codegen\generatePythonSDK ||  goto :error
+call codegen\generateRubySDK || goto :error
 
 goto :EOF
 
