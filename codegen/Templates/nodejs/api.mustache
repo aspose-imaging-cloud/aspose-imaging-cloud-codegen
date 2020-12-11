@@ -21,14 +21,14 @@ export class {{classname}} {
     public configuration: Configuration;
 
     /**
-     * @param appKey App key. Please, set this value as null in case of on-premise hosting.
-     * @param appSID App SID. Please, set this value as null in case of on-premise hosting.
+     * @param clientSecret Client Secret. Please, set this value as null in case of on-premise hosting.
+     * @param clientId Client ID. Please, set this value as null in case of on-premise hosting.
      * @param baseUrl Base api Url. This param is required in case of on-premise hosting.
      * @param debugMode A value indicating whether debug mode. In debug mode all requests and responses are logged to console.
      * @param version API version.
      */
-    constructor(appKey: string, appSID: string, baseUrl?: string, debugMode?: boolean, version?: string) {
-        this.configuration = new Configuration(appKey, appSID, baseUrl, debugMode, version);
+    constructor(clientSecret: string, clientId: string, baseUrl?: string, debugMode?: boolean, version?: string) {
+        this.configuration = new Configuration(clientSecret, clientId, baseUrl, debugMode, version);
     }
 
 {{#operation}}

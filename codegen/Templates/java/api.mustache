@@ -47,14 +47,14 @@ public class {{classname}}
 
     /**
      * Initializes a new instance of the {{classname}} class for Aspose Cloud-hosted service usage.
-     * @param appKey The app key.
-     * @param appSid The app SID.
+     * @param clientSecret The Client Secret.
+     * @param clientId The Client ID.
      */
-    public {{classname}}(String appKey, String appSid)
+    public {{classname}}(String clientSecret, String clientId)
     {
         Configuration config = new Configuration();
-        config.AppKey = appKey;
-        config.AppSid = appSid;
+        config.ClientSecret = clientSecret;
+        config.ClientId = clientId;
         this.init{{classname}}(config);
     }
     
@@ -77,31 +77,31 @@ public class {{classname}}
 
     /**
      * Initializes a new instance of the {{classname}} class for Aspose Cloud-hosted service usage.
-     * @param appKey The app key.
-     * @param appSid The app SID.
+     * @param clientSecret The Client Secret.
+     * @param clientId The Client ID.
      * @param baseUrl The base URL.
      */
-    public {{classname}}(String appKey, String appSid, String baseUrl)
+    public {{classname}}(String clientSecret, String clientId, String baseUrl)
     {
         Configuration config = new Configuration();
-        config.AppKey = appKey;
-        config.AppSid = appSid;
+        config.ClientSecret = clientSecret;
+        config.ClientId = clientId;
         config.setApiBaseUrl(baseUrl);
         this.init{{classname}}(config);
     }
 
     /**
      * Initializes a new instance of the {{classname}} class for Aspose Cloud-hosted service usage.
-     * @param appKey The app key.
-     * @param appSid The app SID.
+     * @param clientSecret The Client Secret.
+     * @param clientId The Client ID.
      * @param baseUrl The base URL.
      * @param apiVersion API version.
      */
-    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion) throws Exception
+    public {{classname}}(String clientSecret, String clientId, String baseUrl, String apiVersion) throws Exception
     {
         Configuration config = new Configuration();
-        config.AppKey = appKey;
-        config.AppSid = appSid;
+        config.ClientSecret = clientSecret;
+        config.ClientId = clientId;
         config.setApiBaseUrl(baseUrl);
         config.setApiVersion(apiVersion);
         this.init{{classname}}(config);
@@ -109,17 +109,17 @@ public class {{classname}}
 
     /**
      * Initializes a new instance of the {{classname}} class for Aspose Cloud-hosted service usage.
-     * @param appKey The app key.
-     * @param appSid The app SID.
+     * @param clientSecret The Client Secret.
+     * @param clientId The Client ID.
      * @param baseUrl The base URL.
      * @param apiVersion API version.
      * @param debug If debug mode is enabled.
      */
-    public {{classname}}(String appKey, String appSid, String baseUrl, String apiVersion, Boolean debug) throws Exception
+    public {{classname}}(String clientSecret, String clientId, String baseUrl, String apiVersion, Boolean debug) throws Exception
     {
         Configuration config = new Configuration();
-        config.AppKey = appKey;
-        config.AppSid = appSid;
+        config.ClientSecret = clientSecret;
+        config.ClientId = clientId;
         config.setApiBaseUrl(baseUrl);
         config.setApiVersion(apiVersion);
         config.setDebugMode(debug);
