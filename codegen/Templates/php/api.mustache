@@ -362,7 +362,7 @@ class {{classname}}
     private function requestToken() 
     {
         $requestUrl = $this->configuration->getBaseUrl() . "connect/token";
-        $postData = "grant_type=client_credentials" . "&client_id=" . $this->configuration->getAppSid() . "&client_secret=" . $this->configuration->getAppKey();
+        $postData = "grant_type=client_credentials" . "&client_id=" . $this->configuration->getClientId() . "&client_secret=" . $this->configuration->getClientSecret();
         $headers = [];
         $headers['Content-Type'] = "application/x-www-form-urlencoded";
         $headers['Content-Length'] = strlen($postData);
