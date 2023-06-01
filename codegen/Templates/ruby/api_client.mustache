@@ -54,7 +54,7 @@ module AsposeImagingCloud
       @config = Configuration.new(client_secret, client_id, base_url, api_version, debug)
       @default_headers = {
         'x-aspose-client' => 'ruby sdk',
-        'x-aspose-version' => '22.4'
+        'x-aspose-version' => '23.5'
       }
     end
 
