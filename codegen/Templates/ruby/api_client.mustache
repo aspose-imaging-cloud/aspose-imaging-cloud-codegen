@@ -1,6 +1,6 @@
 #  ----------------------------------------------------------------------------
 #  <copyright company="Aspose" file="api_client.rb">
-#    Copyright (c) 2018-2020 Aspose Pty Ltd. All rights reserved.
+#    Copyright (c) 2018-2025 Aspose Pty Ltd. All rights reserved.
 #  </copyright>
 #  <summary>
 #    Permission is hereby granted, free of charge, to any person obtaining a
@@ -54,7 +54,7 @@ module AsposeImagingCloud
       @config = Configuration.new(client_secret, client_id, base_url, api_version, debug)
       @default_headers = {
         'x-aspose-client' => 'ruby sdk',
-        'x-aspose-version' => '23.5'
+        'x-aspose-version' => '25.4'
       }
     end
 
